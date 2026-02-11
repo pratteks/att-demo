@@ -915,6 +915,11 @@
     "id": "quote",
     "fields": [
       {
+        "component": "tab",
+        "label": "Tab 1",
+        "name": "tab1"
+      },
+      {
         "component": "richtext",
         "valueType": "string",
         "name": "quotation",
@@ -926,6 +931,25 @@
         "name": "attribution",
         "value": "",
         "label": "Attribution123",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Tab 2",
+        "name": "tab2"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "quotation",
+        "value": "",
+        "label": "Quotation1"
+      },
+      {
+        "component": "richtext",
+        "name": "attribution",
+        "value": "",
+        "label": "Attribution12345",
         "valueType": "string"
       }
     ]
