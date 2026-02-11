@@ -941,13 +941,13 @@
       {
         "component": "richtext",
         "valueType": "string",
-        "name": "quotation",
+        "name": "quotation1",
         "value": "",
         "label": "Quotation1"
       },
       {
         "component": "richtext",
-        "name": "attribution",
+        "name": "attribution12345",
         "value": "",
         "label": "Attribution12345",
         "valueType": "string"
