@@ -925,7 +925,7 @@
         "component": "richtext",
         "name": "attribution",
         "value": "",
-        "label": "Attribution",
+        "label": "Attribution123",
         "valueType": "string"
       }
     ]
