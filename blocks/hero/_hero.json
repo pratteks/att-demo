@@ -37,484 +37,179 @@
       "id": "hero",
       "fields": [
         {
-          "component": "container",
+          "component": "tab",
           "name": "general",
-          "label": "General",
+          "label": "General"
+        },
+        {
+          "component": "container",
+          "name": "layout",
+          "label": "Layout",
           "valueType": "string",
           "fields": [
             {
-              "component": "container",
-              "name": "layout",
-              "label": "Layout",
+              "component": "select",
+              "name": "themeColor",
+              "label": "Theme Color",
               "valueType": "string",
-              "fields": [
+              "options": [
                 {
-                  "component": "select",
-                  "name": "themeColor",
-                  "label": "Theme Color",
-                  "valueType": "string",
-                  "options": [
-                    {
-                      "name": "Base Color",
-                      "value": "base-color"
-                    },
-                    {
-                      "name": "Neutral Color",
-                      "value": "neutral-color"
-                    },
-                    {
-                      "name": "Accent Color",
-                      "value": "accent-color"
-                    },
-                    {
-                      "name": "Dark Accent Color",
-                      "value": "dark-accent-color"
-                    },
-                    {
-                      "name": "Light Color with Image",
-                      "value": "light-color-with-image"
-                    },
-                    {
-                      "name": "Dark Color with Image",
-                      "value": "dark-color-with-image"
-                    }
-                  ]
+                  "name": "Base Color",
+                  "value": "base-color"
                 },
                 {
-                  "component": "select",
-                  "name": "timerMobileThemeColor",
-                  "label": "Timer Mobile Theme Color",
-                  "valueType": "string",
-                  "options": [
-                    {
-                      "name": "Base Color",
-                      "value": "base-color"
-                    },
-                    {
-                      "name": "Neutral Color",
-                      "value": "neutral-color"
-                    },
-                    {
-                      "name": "Accent Color",
-                      "value": "accent-color"
-                    },
-                    {
-                      "name": "Dark Accent Color",
-                      "value": "dark-accent-color"
-                    },
-                    {
-                      "name": "Light Color with Image",
-                      "value": "light-color-with-image"
-                    },
-                    {
-                      "name": "Dark Color with Image",
-                      "value": "dark-color-with-image"
-                    }
-                  ]
+                  "name": "Neutral Color",
+                  "value": "neutral-color"
                 },
                 {
-                  "component": "select",
-                  "name": "layoutVariation",
-                  "label": "Layout Variation",
-                  "valueType": "string",
-                  "options": [
-                    {
-                      "name": "Hero Left Content",
-                      "value": "hero-left-content"
-                    },
-                    {
-                      "name": "Hero Center Content",
-                      "value": "hero-center-content"
-                    },
-                    {
-                      "name": "Hero Center Top Content",
-                      "value": "hero-center-top-content"
-                    }
-                  ]
+                  "name": "Accent Color",
+                  "value": "accent-color"
                 },
                 {
-                  "component": "select",
-                  "name": "heightHeroVariation",
-                  "label": "Height Hero Variation",
-                  "valueType": "string",
-                  "options": [
-                    {
-                      "name": "Small Variation",
-                      "value": "small-variation"
-                    },
-                    {
-                      "name": "Medium Variation",
-                      "value": "medium-variation"
-                    },
-                    {
-                      "name": "Large Variation",
-                      "value": "large-variation"
-                    },
-                    {
-                      "name": "Custom Height",
-                      "value": "custom-height"
-                    }
-                  ]
+                  "name": "Dark Accent Color",
+                  "value": "dark-accent-color"
                 },
                 {
-                  "component": "number",
-                  "name": "customSizeTablet",
-                  "label": "Custom size Tablet",
-                  "valueType": "number",
-                  "minimum": 0,
-                  "condition": {
-                    "===": [
-                      {
-                        "var": "heightHeroVariation"
-                      },
-                      "custom-height"
-                    ]
-                  }
+                  "name": "Light Color with Image",
+                  "value": "light-color-with-image"
                 },
                 {
-                  "component": "number",
-                  "name": "customSizeDesktop",
-                  "label": "Custom size Desktop",
-                  "valueType": "number",
-                  "minimum": 0,
-                  "condition": {
-                    "===": [
-                      {
-                        "var": "heightHeroVariation"
-                      },
-                      "custom-height"
-                    ]
-                  }
-                },
-                {
-                  "component": "select",
-                  "name": "overlayColor",
-                  "label": "Overlay Color",
-                  "valueType": "string",
-                  "options": [
-                    {
-                      "name": "AT&T Blue 000",
-                      "value": "att-blue-000"
-                    },
-                    {
-                      "name": "Cobalt 100",
-                      "value": "cobalt-100"
-                    },
-                    {
-                      "name": "Cobalt 400",
-                      "value": "cobalt-400"
-                    },
-                    {
-                      "name": "Cobalt 600",
-                      "value": "cobalt-600"
-                    },
-                    {
-                      "name": "Cobalt 800",
-                      "value": "cobalt-800"
-                    }
-                  ]
+                  "name": "Dark Color with Image",
+                  "value": "dark-color-with-image"
                 }
               ]
             },
             {
-              "component": "container",
-              "name": "content",
-              "label": "Content",
+              "component": "select",
+              "name": "timerMobileThemeColor",
+              "label": "Timer Mobile Theme Color",
               "valueType": "string",
-              "fields": [
+              "options": [
                 {
-                  "component": "select",
-                  "name": "eyebrowVariation",
-                  "label": "Eyebrow Variation",
-                  "valueType": "string",
-                  "options": [
-                    {
-                      "name": "Text",
-                      "value": "text"
-                    }
-                  ]
+                  "name": "Base Color",
+                  "value": "base-color"
                 },
                 {
-                  "component": "container",
-                  "name": "eyebrow",
-                  "label": "Eyebrow",
-                  "valueType": "string",
-                  "fields": [
-                    {
-                      "component": "text",
-                      "name": "eyebrowText",
-                      "label": "Eyebrow text",
-                      "valueType": "string"
-                    },
-                    {
-                      "component": "select",
-                      "name": "eyebrowDesktopSize",
-                      "label": "Desktop size",
-                      "valueType": "string",
-                      "options": [
-                        {
-                          "name": "LG",
-                          "value": "lg"
-                        }
-                      ]
-                    },
-                    {
-                      "component": "select",
-                      "name": "eyebrowTabletSize",
-                      "label": "Tablet size",
-                      "valueType": "string",
-                      "options": [
-                        {
-                          "name": "inherit",
-                          "value": "inherit"
-                        }
-                      ]
-                    },
-                    {
-                      "component": "select",
-                      "name": "eyebrowMobileSize",
-                      "label": "Mobile size",
-                      "valueType": "string",
-                      "options": [
-                        {
-                          "name": "inherit",
-                          "value": "inherit"
-                        }
-                      ]
-                    }
-                  ]
+                  "name": "Neutral Color",
+                  "value": "neutral-color"
                 },
                 {
-                  "component": "container",
-                  "name": "heading",
-                  "label": "Heading",
-                  "valueType": "string",
-                  "fields": [
-                    {
-                      "component": "text",
-                      "name": "headingText",
-                      "label": "Heading",
-                      "valueType": "string"
-                    },
-                    {
-                      "component": "select",
-                      "name": "headingDesktopSize",
-                      "label": "Desktop size",
-                      "valueType": "string",
-                      "options": [
-                        {
-                          "name": "XXL",
-                          "value": "xxl"
-                        }
-                      ]
-                    },
-                    {
-                      "component": "select",
-                      "name": "headingTabletSize",
-                      "label": "Tablet size",
-                      "valueType": "string",
-                      "options": [
-                        {
-                          "name": "inherit",
-                          "value": "inherit"
-                        }
-                      ]
-                    },
-                    {
-                      "component": "select",
-                      "name": "headingMobileSize",
-                      "label": "Mobile size",
-                      "valueType": "string",
-                      "options": [
-                        {
-                          "name": "inherit",
-                          "value": "inherit"
-                        }
-                      ]
-                    }
-                  ]
+                  "name": "Accent Color",
+                  "value": "accent-color"
                 },
                 {
-                  "component": "richtext",
-                  "name": "description",
-                  "label": "Description",
-                  "valueType": "string"
+                  "name": "Dark Accent Color",
+                  "value": "dark-accent-color"
                 },
                 {
-                  "component": "richtext",
-                  "name": "legal",
-                  "label": "Legal",
-                  "valueType": "string"
+                  "name": "Light Color with Image",
+                  "value": "light-color-with-image"
                 },
                 {
-                  "component": "aem-content",
-                  "name": "desktopFullWidthImageBeginning",
-                  "label": "Desktop Full-Width Image (Beginning)",
-                  "valueType": "string",
-                  "rootPath": ""
-                },
-                {
-                  "component": "aem-content",
-                  "name": "desktopFullWidthImageBackgroundAndEnding",
-                  "label": "Desktop Full-Width Image (Background & Ending)",
-                  "valueType": "string",
-                  "rootPath": ""
-                },
-                {
-                  "component": "aem-content",
-                  "name": "tabletFullWidthImageBeginning",
-                  "label": "Tablet Full-Width Image (Beginning)",
-                  "valueType": "string",
-                  "rootPath": ""
-                },
-                {
-                  "component": "aem-content",
-                  "name": "tabletFullWidthImageBackgroundAndEnding",
-                  "label": "Tablet Full-Width Image (Background & Ending)",
-                  "valueType": "string",
-                  "rootPath": ""
-                },
-                {
-                  "component": "aem-content",
-                  "name": "mobileFullWidthImageBeginning",
-                  "label": "Mobile Full-Width Image (Beginning)",
-                  "valueType": "string",
-                  "rootPath": ""
-                },
-                {
-                  "component": "aem-content",
-                  "name": "mobileFullWidthImageBackgroundAndEnding",
-                  "label": "Mobile Full-Width Image (Background & Ending)",
-                  "valueType": "string",
-                  "rootPath": ""
-                },
-                {
-                  "component": "boolean",
-                  "name": "mobileImageDisplaysBelowCopy",
-                  "label": "Mobile image displays below copy",
-                  "valueType": "boolean"
-                },
-                {
-                  "component": "boolean",
-                  "name": "videoEnable",
-                  "label": "Video Enable",
-                  "valueType": "boolean"
-                },
-                {
-                  "component": "select",
-                  "name": "videoVariation",
-                  "label": "Video Variation",
-                  "valueType": "string",
-                  "options": [
-                    {
-                      "name": "Show Video In Modal",
-                      "value": "show-video-in-modal"
-                    }
-                  ]
-                },
-                {
-                  "component": "aem-content",
-                  "name": "modalMediaLink",
-                  "label": "Modal Media Link",
-                  "valueType": "string",
-                  "rootPath": "",
-                  "condition": {
-                    "===": [
-                      {
-                        "var": "videoVariation"
-                      },
-                      "show-video-in-modal"
-                    ]
-                  }
-                },
-                {
-                  "component": "select",
-                  "name": "themePlayIcon",
-                  "label": "Theme Play Icon",
-                  "valueType": "string",
-                  "options": [
-                    {
-                      "name": "Light",
-                      "value": "light"
-                    },
-                    {
-                      "name": "Dark",
-                      "value": "dark"
-                    }
-                  ]
+                  "name": "Dark Color with Image",
+                  "value": "dark-color-with-image"
                 }
               ]
             },
             {
-              "component": "container",
-              "name": "ctaDetails",
-              "label": "CTA Details",
+              "component": "select",
+              "name": "layoutVariation",
+              "label": "Layout Variation",
               "valueType": "string",
-              "fields": [
+              "options": [
                 {
-                  "component": "select",
-                  "name": "ctaLayout",
-                  "label": "CTA Layout",
-                  "valueType": "string",
-                  "options": [
-                    {
-                      "name": "Stacked",
-                      "value": "stacked"
-                    }
-                  ]
+                  "name": "Hero Left Content",
+                  "value": "hero-left-content"
+                },
+                {
+                  "name": "Hero Center Content",
+                  "value": "hero-center-content"
+                },
+                {
+                  "name": "Hero Center Top Content",
+                  "value": "hero-center-top-content"
                 }
               ]
             },
             {
-              "component": "container",
-              "name": "globalHyperlinks",
-              "label": "Global Hyperlinks",
+              "component": "select",
+              "name": "heightHeroVariation",
+              "label": "Height Hero Variation",
               "valueType": "string",
-              "fields": [
+              "options": [
                 {
-                  "component": "aem-content",
-                  "name": "globalPageOrMediaLink",
-                  "label": "Page or Media Link",
-                  "valueType": "string",
-                  "rootPath": ""
+                  "name": "Small Variation",
+                  "value": "small-variation"
                 },
                 {
-                  "component": "aem-content",
-                  "name": "globalAssetsLinks",
-                  "label": "Assets Links",
-                  "valueType": "string",
-                  "rootPath": ""
+                  "name": "Medium Variation",
+                  "value": "medium-variation"
                 },
                 {
-                  "component": "text",
-                  "name": "globalExternalLinks",
-                  "label": "External Links",
-                  "valueType": "string"
+                  "name": "Large Variation",
+                  "value": "large-variation"
                 },
                 {
-                  "component": "boolean",
-                  "name": "globalNoFollow",
-                  "label": "No Follow",
-                  "valueType": "boolean"
+                  "name": "Custom Height",
+                  "value": "custom-height"
+                }
+              ]
+            },
+            {
+              "component": "number",
+              "name": "customSizeTablet",
+              "label": "Custom size Tablet",
+              "valueType": "number",
+              "minimum": 0,
+              "condition": {
+                "===": [
+                  {
+                    "var": "heightHeroVariation"
+                  },
+                  "custom-height"
+                ]
+              }
+            },
+            {
+              "component": "number",
+              "name": "customSizeDesktop",
+              "label": "Custom size Desktop",
+              "valueType": "number",
+              "minimum": 0,
+              "condition": {
+                "===": [
+                  {
+                    "var": "heightHeroVariation"
+                  },
+                  "custom-height"
+                ]
+              }
+            },
+            {
+              "component": "select",
+              "name": "overlayColor",
+              "label": "Overlay Color",
+              "valueType": "string",
+              "options": [
+                {
+                  "name": "AT&T Blue 000",
+                  "value": "att-blue-000"
                 },
                 {
-                  "component": "boolean",
-                  "name": "globalOpenNewWindow",
-                  "label": "Open New Window",
-                  "valueType": "boolean"
+                  "name": "Cobalt 100",
+                  "value": "cobalt-100"
                 },
                 {
-                  "component": "select",
-                  "name": "globalAnchorTo",
-                  "label": "Anchor To",
-                  "valueType": "string",
-                  "options": []
+                  "name": "Cobalt 400",
+                  "value": "cobalt-400"
                 },
                 {
-                  "component": "text",
-                  "name": "globalAnalyticsTitle",
-                  "label": "Analytics Title",
-                  "valueType": "string"
+                  "name": "Cobalt 600",
+                  "value": "cobalt-600"
+                },
+                {
+                  "name": "Cobalt 800",
+                  "value": "cobalt-800"
                 }
               ]
             }
@@ -522,338 +217,631 @@
         },
         {
           "component": "container",
+          "name": "content",
+          "label": "Content",
+          "valueType": "string",
+          "fields": [
+            {
+              "component": "select",
+              "name": "eyebrowVariation",
+              "label": "Eyebrow Variation",
+              "valueType": "string",
+              "options": [
+                {
+                  "name": "Text",
+                  "value": "text"
+                }
+              ]
+            },
+            {
+              "component": "container",
+              "name": "eyebrow",
+              "label": "Eyebrow",
+              "valueType": "string",
+              "fields": [
+                {
+                  "component": "text",
+                  "name": "eyebrowText",
+                  "label": "Eyebrow text",
+                  "valueType": "string"
+                },
+                {
+                  "component": "select",
+                  "name": "eyebrowDesktopSize",
+                  "label": "Desktop size",
+                  "valueType": "string",
+                  "options": [
+                    {
+                      "name": "LG",
+                      "value": "lg"
+                    }
+                  ]
+                },
+                {
+                  "component": "select",
+                  "name": "eyebrowTabletSize",
+                  "label": "Tablet size",
+                  "valueType": "string",
+                  "options": [
+                    {
+                      "name": "inherit",
+                      "value": "inherit"
+                    }
+                  ]
+                },
+                {
+                  "component": "select",
+                  "name": "eyebrowMobileSize",
+                  "label": "Mobile size",
+                  "valueType": "string",
+                  "options": [
+                    {
+                      "name": "inherit",
+                      "value": "inherit"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "component": "container",
+              "name": "heading",
+              "label": "Heading",
+              "valueType": "string",
+              "fields": [
+                {
+                  "component": "text",
+                  "name": "headingText",
+                  "label": "Heading",
+                  "valueType": "string"
+                },
+                {
+                  "component": "select",
+                  "name": "headingDesktopSize",
+                  "label": "Desktop size",
+                  "valueType": "string",
+                  "options": [
+                    {
+                      "name": "XXL",
+                      "value": "xxl"
+                    }
+                  ]
+                },
+                {
+                  "component": "select",
+                  "name": "headingTabletSize",
+                  "label": "Tablet size",
+                  "valueType": "string",
+                  "options": [
+                    {
+                      "name": "inherit",
+                      "value": "inherit"
+                    }
+                  ]
+                },
+                {
+                  "component": "select",
+                  "name": "headingMobileSize",
+                  "label": "Mobile size",
+                  "valueType": "string",
+                  "options": [
+                    {
+                      "name": "inherit",
+                      "value": "inherit"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "component": "richtext",
+              "name": "description",
+              "label": "Description",
+              "valueType": "string"
+            },
+            {
+              "component": "richtext",
+              "name": "legal",
+              "label": "Legal",
+              "valueType": "string"
+            },
+            {
+              "component": "aem-content",
+              "name": "desktopFullWidthImageBeginning",
+              "label": "Desktop Full-Width Image (Beginning)",
+              "valueType": "string",
+              "rootPath": ""
+            },
+            {
+              "component": "aem-content",
+              "name": "desktopFullWidthImageBackgroundAndEnding",
+              "label": "Desktop Full-Width Image (Background & Ending)",
+              "valueType": "string",
+              "rootPath": ""
+            },
+            {
+              "component": "aem-content",
+              "name": "tabletFullWidthImageBeginning",
+              "label": "Tablet Full-Width Image (Beginning)",
+              "valueType": "string",
+              "rootPath": ""
+            },
+            {
+              "component": "aem-content",
+              "name": "tabletFullWidthImageBackgroundAndEnding",
+              "label": "Tablet Full-Width Image (Background & Ending)",
+              "valueType": "string",
+              "rootPath": ""
+            },
+            {
+              "component": "aem-content",
+              "name": "mobileFullWidthImageBeginning",
+              "label": "Mobile Full-Width Image (Beginning)",
+              "valueType": "string",
+              "rootPath": ""
+            },
+            {
+              "component": "aem-content",
+              "name": "mobileFullWidthImageBackgroundAndEnding",
+              "label": "Mobile Full-Width Image (Background & Ending)",
+              "valueType": "string",
+              "rootPath": ""
+            },
+            {
+              "component": "boolean",
+              "name": "mobileImageDisplaysBelowCopy",
+              "label": "Mobile image displays below copy",
+              "valueType": "boolean"
+            },
+            {
+              "component": "boolean",
+              "name": "videoEnable",
+              "label": "Video Enable",
+              "valueType": "boolean"
+            },
+            {
+              "component": "select",
+              "name": "videoVariation",
+              "label": "Video Variation",
+              "valueType": "string",
+              "options": [
+                {
+                  "name": "Show Video In Modal",
+                  "value": "show-video-in-modal"
+                }
+              ]
+            },
+            {
+              "component": "aem-content",
+              "name": "modalMediaLink",
+              "label": "Modal Media Link",
+              "valueType": "string",
+              "rootPath": "",
+              "condition": {
+                "===": [
+                  {
+                    "var": "videoVariation"
+                  },
+                  "show-video-in-modal"
+                ]
+              }
+            },
+            {
+              "component": "select",
+              "name": "themePlayIcon",
+              "label": "Theme Play Icon",
+              "valueType": "string",
+              "options": [
+                {
+                  "name": "Light",
+                  "value": "light"
+                },
+                {
+                  "name": "Dark",
+                  "value": "dark"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "ctaDetails",
+          "label": "CTA Details",
+          "valueType": "string",
+          "fields": [
+            {
+              "component": "select",
+              "name": "ctaLayout",
+              "label": "CTA Layout",
+              "valueType": "string",
+              "options": [
+                {
+                  "name": "Stacked",
+                  "value": "stacked"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "globalHyperlinks",
+          "label": "Global Hyperlinks",
+          "valueType": "string",
+          "fields": [
+            {
+              "component": "aem-content",
+              "name": "globalPageOrMediaLink",
+              "label": "Page or Media Link",
+              "valueType": "string",
+              "rootPath": ""
+            },
+            {
+              "component": "aem-content",
+              "name": "globalAssetsLinks",
+              "label": "Assets Links",
+              "valueType": "string",
+              "rootPath": ""
+            },
+            {
+              "component": "text",
+              "name": "globalExternalLinks",
+              "label": "External Links",
+              "valueType": "string"
+            },
+            {
+              "component": "boolean",
+              "name": "globalNoFollow",
+              "label": "No Follow",
+              "valueType": "boolean"
+            },
+            {
+              "component": "boolean",
+              "name": "globalOpenNewWindow",
+              "label": "Open New Window",
+              "valueType": "boolean"
+            },
+            {
+              "component": "select",
+              "name": "globalAnchorTo",
+              "label": "Anchor To",
+              "valueType": "string",
+              "options": []
+            },
+            {
+              "component": "text",
+              "name": "globalAnalyticsTitle",
+              "label": "Analytics Title",
+              "valueType": "string"
+            }
+          ]
+        },
+        {
+          "component": "tab",
           "name": "padding",
-          "label": "Padding",
+          "label": "Padding"
+        },
+        {
+          "component": "select",
+          "name": "mobilePaddingLeft",
+          "label": "Mobile Padding Left",
           "valueType": "string",
-          "fields": [
-            {
-              "component": "select",
-              "name": "mobilePaddingLeft",
-              "label": "Mobile Padding Left",
-              "valueType": "string",
-              "options": [
-                { "name": "Default", "value": "default" },
-                { "name": "0px", "value": "0px" },
-                { "name": "8px", "value": "8px" },
-                { "name": "16px", "value": "16px" },
-                { "name": "24px", "value": "24px" },
-                { "name": "32px", "value": "32px" }
-              ]
-            },
-            {
-              "component": "select",
-              "name": "mobilePaddingRight",
-              "label": "Mobile Padding Right",
-              "valueType": "string",
-              "options": [
-                { "name": "Default", "value": "default" },
-                { "name": "0px", "value": "0px" },
-                { "name": "8px", "value": "8px" },
-                { "name": "16px", "value": "16px" },
-                { "name": "24px", "value": "24px" },
-                { "name": "32px", "value": "32px" }
-              ]
-            },
-            {
-              "component": "select",
-              "name": "tabletPaddingLeft",
-              "label": "Tablet Padding Left",
-              "valueType": "string",
-              "options": [
-                { "name": "Default", "value": "default" },
-                { "name": "0px", "value": "0px" },
-                { "name": "8px", "value": "8px" },
-                { "name": "16px", "value": "16px" },
-                { "name": "24px", "value": "24px" },
-                { "name": "32px", "value": "32px" }
-              ]
-            },
-            {
-              "component": "select",
-              "name": "tabletPaddingRight",
-              "label": "Tablet Padding Right",
-              "valueType": "string",
-              "options": [
-                { "name": "Default", "value": "default" },
-                { "name": "0px", "value": "0px" },
-                { "name": "8px", "value": "8px" },
-                { "name": "16px", "value": "16px" },
-                { "name": "24px", "value": "24px" },
-                { "name": "32px", "value": "32px" }
-              ]
-            },
-            {
-              "component": "select",
-              "name": "desktopPaddingLeft",
-              "label": "Desktop Padding Left",
-              "valueType": "string",
-              "options": [
-                { "name": "Default", "value": "default" },
-                { "name": "0px", "value": "0px" },
-                { "name": "8px", "value": "8px" },
-                { "name": "16px", "value": "16px" },
-                { "name": "24px", "value": "24px" },
-                { "name": "32px", "value": "32px" }
-              ]
-            },
-            {
-              "component": "select",
-              "name": "desktopPaddingRight",
-              "label": "Desktop Padding Right",
-              "valueType": "string",
-              "options": [
-                { "name": "Default", "value": "default" },
-                { "name": "0px", "value": "0px" },
-                { "name": "8px", "value": "8px" },
-                { "name": "16px", "value": "16px" },
-                { "name": "24px", "value": "24px" },
-                { "name": "32px", "value": "32px" }
-              ]
-            },
-            {
-              "component": "select",
-              "name": "mobilePaddingTop",
-              "label": "Mobile Padding Top",
-              "valueType": "string",
-              "options": [
-                { "name": "Default", "value": "default" },
-                { "name": "0px", "value": "0px" },
-                { "name": "8px", "value": "8px" },
-                { "name": "16px", "value": "16px" },
-                { "name": "24px", "value": "24px" },
-                { "name": "32px", "value": "32px" }
-              ]
-            },
-            {
-              "component": "select",
-              "name": "mobilePaddingBottom",
-              "label": "Mobile Padding Bottom",
-              "valueType": "string",
-              "options": [
-                { "name": "Default", "value": "default" },
-                { "name": "0px", "value": "0px" },
-                { "name": "8px", "value": "8px" },
-                { "name": "16px", "value": "16px" },
-                { "name": "24px", "value": "24px" },
-                { "name": "32px", "value": "32px" }
-              ]
-            },
-            {
-              "component": "select",
-              "name": "tabletPaddingTop",
-              "label": "Tablet Padding Top",
-              "valueType": "string",
-              "options": [
-                { "name": "Default", "value": "default" },
-                { "name": "0px", "value": "0px" },
-                { "name": "8px", "value": "8px" },
-                { "name": "16px", "value": "16px" },
-                { "name": "24px", "value": "24px" },
-                { "name": "32px", "value": "32px" }
-              ]
-            },
-            {
-              "component": "select",
-              "name": "tabletPaddingBottom",
-              "label": "Tablet Padding Bottom",
-              "valueType": "string",
-              "options": [
-                { "name": "Default", "value": "default" },
-                { "name": "0px", "value": "0px" },
-                { "name": "8px", "value": "8px" },
-                { "name": "16px", "value": "16px" },
-                { "name": "24px", "value": "24px" },
-                { "name": "32px", "value": "32px" }
-              ]
-            },
-            {
-              "component": "select",
-              "name": "desktopPaddingTop",
-              "label": "Desktop Padding Top",
-              "valueType": "string",
-              "options": [
-                { "name": "Default", "value": "default" },
-                { "name": "0px", "value": "0px" },
-                { "name": "8px", "value": "8px" },
-                { "name": "16px", "value": "16px" },
-                { "name": "24px", "value": "24px" },
-                { "name": "32px", "value": "32px" }
-              ]
-            },
-            {
-              "component": "select",
-              "name": "desktopPaddingBottom",
-              "label": "Desktop Padding Bottom",
-              "valueType": "string",
-              "options": [
-                { "name": "Default", "value": "default" },
-                { "name": "0px", "value": "0px" },
-                { "name": "8px", "value": "8px" },
-                { "name": "16px", "value": "16px" },
-                { "name": "24px", "value": "24px" },
-                { "name": "32px", "value": "32px" }
-              ]
-            }
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "0px", "value": "0px" },
+            { "name": "8px", "value": "8px" },
+            { "name": "16px", "value": "16px" },
+            { "name": "24px", "value": "24px" },
+            { "name": "32px", "value": "32px" }
           ]
         },
         {
-          "component": "container",
+          "component": "select",
+          "name": "mobilePaddingRight",
+          "label": "Mobile Padding Right",
+          "valueType": "string",
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "0px", "value": "0px" },
+            { "name": "8px", "value": "8px" },
+            { "name": "16px", "value": "16px" },
+            { "name": "24px", "value": "24px" },
+            { "name": "32px", "value": "32px" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "tabletPaddingLeft",
+          "label": "Tablet Padding Left",
+          "valueType": "string",
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "0px", "value": "0px" },
+            { "name": "8px", "value": "8px" },
+            { "name": "16px", "value": "16px" },
+            { "name": "24px", "value": "24px" },
+            { "name": "32px", "value": "32px" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "tabletPaddingRight",
+          "label": "Tablet Padding Right",
+          "valueType": "string",
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "0px", "value": "0px" },
+            { "name": "8px", "value": "8px" },
+            { "name": "16px", "value": "16px" },
+            { "name": "24px", "value": "24px" },
+            { "name": "32px", "value": "32px" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "desktopPaddingLeft",
+          "label": "Desktop Padding Left",
+          "valueType": "string",
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "0px", "value": "0px" },
+            { "name": "8px", "value": "8px" },
+            { "name": "16px", "value": "16px" },
+            { "name": "24px", "value": "24px" },
+            { "name": "32px", "value": "32px" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "desktopPaddingRight",
+          "label": "Desktop Padding Right",
+          "valueType": "string",
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "0px", "value": "0px" },
+            { "name": "8px", "value": "8px" },
+            { "name": "16px", "value": "16px" },
+            { "name": "24px", "value": "24px" },
+            { "name": "32px", "value": "32px" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "mobilePaddingTop",
+          "label": "Mobile Padding Top",
+          "valueType": "string",
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "0px", "value": "0px" },
+            { "name": "8px", "value": "8px" },
+            { "name": "16px", "value": "16px" },
+            { "name": "24px", "value": "24px" },
+            { "name": "32px", "value": "32px" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "mobilePaddingBottom",
+          "label": "Mobile Padding Bottom",
+          "valueType": "string",
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "0px", "value": "0px" },
+            { "name": "8px", "value": "8px" },
+            { "name": "16px", "value": "16px" },
+            { "name": "24px", "value": "24px" },
+            { "name": "32px", "value": "32px" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "tabletPaddingTop",
+          "label": "Tablet Padding Top",
+          "valueType": "string",
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "0px", "value": "0px" },
+            { "name": "8px", "value": "8px" },
+            { "name": "16px", "value": "16px" },
+            { "name": "24px", "value": "24px" },
+            { "name": "32px", "value": "32px" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "tabletPaddingBottom",
+          "label": "Tablet Padding Bottom",
+          "valueType": "string",
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "0px", "value": "0px" },
+            { "name": "8px", "value": "8px" },
+            { "name": "16px", "value": "16px" },
+            { "name": "24px", "value": "24px" },
+            { "name": "32px", "value": "32px" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "desktopPaddingTop",
+          "label": "Desktop Padding Top",
+          "valueType": "string",
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "0px", "value": "0px" },
+            { "name": "8px", "value": "8px" },
+            { "name": "16px", "value": "16px" },
+            { "name": "24px", "value": "24px" },
+            { "name": "32px", "value": "32px" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "desktopPaddingBottom",
+          "label": "Desktop Padding Bottom",
+          "valueType": "string",
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "0px", "value": "0px" },
+            { "name": "8px", "value": "8px" },
+            { "name": "16px", "value": "16px" },
+            { "name": "24px", "value": "24px" },
+            { "name": "32px", "value": "32px" }
+          ]
+        },
+        {
+          "component": "tab",
           "name": "margin",
-          "label": "Margin",
+          "label": "Margin"
+        },
+        {
+          "component": "select",
+          "name": "mobileMarginTop",
+          "label": "Mobile Margin Top",
           "valueType": "string",
-          "fields": [
-            {
-              "component": "select",
-              "name": "mobileMarginTop",
-              "label": "Mobile Margin Top",
-              "valueType": "string",
-              "options": [
-                { "name": "Default", "value": "default" },
-                { "name": "0px", "value": "0px" },
-                { "name": "8px", "value": "8px" },
-                { "name": "16px", "value": "16px" },
-                { "name": "24px", "value": "24px" },
-                { "name": "32px", "value": "32px" }
-              ]
-            },
-            {
-              "component": "select",
-              "name": "mobileMarginBottom",
-              "label": "Mobile Margin Bottom",
-              "valueType": "string",
-              "options": [
-                { "name": "Default", "value": "default" },
-                { "name": "0px", "value": "0px" },
-                { "name": "8px", "value": "8px" },
-                { "name": "16px", "value": "16px" },
-                { "name": "24px", "value": "24px" },
-                { "name": "32px", "value": "32px" }
-              ]
-            },
-            {
-              "component": "select",
-              "name": "tabletMarginTop",
-              "label": "Tablet Margin Top",
-              "valueType": "string",
-              "options": [
-                { "name": "Default", "value": "default" },
-                { "name": "0px", "value": "0px" },
-                { "name": "8px", "value": "8px" },
-                { "name": "16px", "value": "16px" },
-                { "name": "24px", "value": "24px" },
-                { "name": "32px", "value": "32px" }
-              ]
-            },
-            {
-              "component": "select",
-              "name": "tabletMarginBottom",
-              "label": "Tablet Margin Bottom",
-              "valueType": "string",
-              "options": [
-                { "name": "Default", "value": "default" },
-                { "name": "0px", "value": "0px" },
-                { "name": "8px", "value": "8px" },
-                { "name": "16px", "value": "16px" },
-                { "name": "24px", "value": "24px" },
-                { "name": "32px", "value": "32px" }
-              ]
-            },
-            {
-              "component": "select",
-              "name": "desktopMarginTop",
-              "label": "Desktop Margin Top",
-              "valueType": "string",
-              "options": [
-                { "name": "Default", "value": "default" },
-                { "name": "0px", "value": "0px" },
-                { "name": "8px", "value": "8px" },
-                { "name": "16px", "value": "16px" },
-                { "name": "24px", "value": "24px" },
-                { "name": "32px", "value": "32px" }
-              ]
-            },
-            {
-              "component": "select",
-              "name": "desktopMarginBottom",
-              "label": "Desktop Margin Bottom",
-              "valueType": "string",
-              "options": [
-                { "name": "Default", "value": "default" },
-                { "name": "0px", "value": "0px" },
-                { "name": "8px", "value": "8px" },
-                { "name": "16px", "value": "16px" },
-                { "name": "24px", "value": "24px" },
-                { "name": "32px", "value": "32px" }
-              ]
-            }
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "0px", "value": "0px" },
+            { "name": "8px", "value": "8px" },
+            { "name": "16px", "value": "16px" },
+            { "name": "24px", "value": "24px" },
+            { "name": "32px", "value": "32px" }
           ]
         },
         {
-          "component": "container",
+          "component": "select",
+          "name": "mobileMarginBottom",
+          "label": "Mobile Margin Bottom",
+          "valueType": "string",
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "0px", "value": "0px" },
+            { "name": "8px", "value": "8px" },
+            { "name": "16px", "value": "16px" },
+            { "name": "24px", "value": "24px" },
+            { "name": "32px", "value": "32px" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "tabletMarginTop",
+          "label": "Tablet Margin Top",
+          "valueType": "string",
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "0px", "value": "0px" },
+            { "name": "8px", "value": "8px" },
+            { "name": "16px", "value": "16px" },
+            { "name": "24px", "value": "24px" },
+            { "name": "32px", "value": "32px" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "tabletMarginBottom",
+          "label": "Tablet Margin Bottom",
+          "valueType": "string",
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "0px", "value": "0px" },
+            { "name": "8px", "value": "8px" },
+            { "name": "16px", "value": "16px" },
+            { "name": "24px", "value": "24px" },
+            { "name": "32px", "value": "32px" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "desktopMarginTop",
+          "label": "Desktop Margin Top",
+          "valueType": "string",
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "0px", "value": "0px" },
+            { "name": "8px", "value": "8px" },
+            { "name": "16px", "value": "16px" },
+            { "name": "24px", "value": "24px" },
+            { "name": "32px", "value": "32px" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "desktopMarginBottom",
+          "label": "Desktop Margin Bottom",
+          "valueType": "string",
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "0px", "value": "0px" },
+            { "name": "8px", "value": "8px" },
+            { "name": "16px", "value": "16px" },
+            { "name": "24px", "value": "24px" },
+            { "name": "32px", "value": "32px" }
+          ]
+        },
+        {
+          "component": "tab",
           "name": "overlay",
-          "label": "Overlay",
+          "label": "Overlay"
+        },
+        {
+          "component": "container",
+          "name": "overlaySection",
+          "label": "Overlay Section",
           "valueType": "string",
           "fields": [
             {
-              "component": "container",
-              "name": "overlaySection",
-              "label": "Overlay Section",
+              "component": "select",
+              "name": "overlaySectionColor",
+              "label": "Overlay Section Color",
               "valueType": "string",
-              "fields": [
-                {
-                  "component": "select",
-                  "name": "overlaySectionColor",
-                  "label": "Overlay Section Color",
-                  "valueType": "string",
-                  "options": []
-                },
-                {
-                  "component": "select",
-                  "name": "sectionOverlayPosition",
-                  "label": "Section Overlay Position",
-                  "valueType": "string",
-                  "options": []
-                },
-                {
-                  "component": "text",
-                  "name": "overlaySectionHeading",
-                  "label": "Heading",
-                  "valueType": "string"
-                },
-                {
-                  "component": "richtext",
-                  "name": "overlaySectionDescription",
-                  "label": "Description",
-                  "valueType": "string"
-                },
-                {
-                  "component": "richtext",
-                  "name": "overlaySectionLegal",
-                  "label": "Legal",
-                  "valueType": "string"
-                },
-                {
-                  "component": "aem-content",
-                  "name": "tabletSmallImage",
-                  "label": "Tablet Small Image",
-                  "valueType": "string",
-                  "rootPath": ""
-                },
-                {
-                  "component": "aem-content",
-                  "name": "desktopSmallImage",
-                  "label": "Desktop Small Image",
-                  "valueType": "string",
-                  "rootPath": ""
-                },
-                {
-                  "component": "aem-content",
-                  "name": "mobileSmallImage",
-                  "label": "Mobile Small Image",
-                  "valueType": "string",
-                  "rootPath": ""
-                }
-              ]
+              "options": []
+            },
+            {
+              "component": "select",
+              "name": "sectionOverlayPosition",
+              "label": "Section Overlay Position",
+              "valueType": "string",
+              "options": []
+            },
+            {
+              "component": "text",
+              "name": "overlaySectionHeading",
+              "label": "Heading",
+              "valueType": "string"
+            },
+            {
+              "component": "richtext",
+              "name": "overlaySectionDescription",
+              "label": "Description",
+              "valueType": "string"
+            },
+            {
+              "component": "richtext",
+              "name": "overlaySectionLegal",
+              "label": "Legal",
+              "valueType": "string"
+            },
+            {
+              "component": "aem-content",
+              "name": "tabletSmallImage",
+              "label": "Tablet Small Image",
+              "valueType": "string",
+              "rootPath": ""
+            },
+            {
+              "component": "aem-content",
+              "name": "desktopSmallImage",
+              "label": "Desktop Small Image",
+              "valueType": "string",
+              "rootPath": ""
+            },
+            {
+              "component": "aem-content",
+              "name": "mobileSmallImage",
+              "label": "Mobile Small Image",
+              "valueType": "string",
+              "rootPath": ""
             }
           ]
         }
@@ -945,9 +933,7 @@
   "filters": [
     {
       "id": "hero",
-      "components": [
-        "cta"
-      ]
+      "components": ["cta"]
     }
   ]
 }
