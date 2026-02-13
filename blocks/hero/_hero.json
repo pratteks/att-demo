@@ -45,7 +45,7 @@
           "component": "container",
           "name": "layout",
           "label": "Layout",
-          "valueType": "string",
+          "collapsible": true,
           "fields": [
             {
               "component": "select",
@@ -219,7 +219,7 @@
           "component": "container",
           "name": "content",
           "label": "Content",
-          "valueType": "string",
+          "collapsible": true,
           "fields": [
             {
               "component": "select",
@@ -237,7 +237,7 @@
               "component": "container",
               "name": "eyebrow",
               "label": "Eyebrow",
-              "valueType": "string",
+              "collapsible": true,
               "fields": [
                 {
                   "component": "text",
@@ -287,7 +287,7 @@
               "component": "container",
               "name": "heading",
               "label": "Heading",
-              "valueType": "string",
+              "collapsible": true,
               "fields": [
                 {
                   "component": "text",
@@ -448,7 +448,7 @@
           "component": "container",
           "name": "ctaDetails",
           "label": "CTA Details",
-          "valueType": "string",
+          "collapsible": true,
           "fields": [
             {
               "component": "select",
@@ -468,7 +468,7 @@
           "component": "container",
           "name": "globalHyperlinks",
           "label": "Global Hyperlinks",
-          "valueType": "string",
+          "collapsible": true,
           "fields": [
             {
               "component": "aem-content",
@@ -788,7 +788,7 @@
           "component": "container",
           "name": "overlaySection",
           "label": "Overlay Section",
-          "valueType": "string",
+          "collapsible": true,
           "fields": [
             {
               "component": "select",
@@ -933,7 +933,9 @@
   "filters": [
     {
       "id": "hero",
-      "components": ["cta"]
+      "components": [
+        "cta"
+      ]
     }
   ]
 }
