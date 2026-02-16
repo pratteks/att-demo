@@ -915,25 +915,6 @@
     "id": "quote",
     "fields": [
       {
-        "component": "tab",
-        "label": "Basic",
-        "name": "basic"
-      },
-      {
-        "component": "richtext",
-        "valueType": "string",
-        "name": "quotation",
-        "value": "",
-        "label": "Quotation"
-      },
-      {
-        "component": "richtext",
-        "name": "attribution",
-        "value": "",
-        "label": "Attribution123",
-        "valueType": "string"
-      },
-      {
           "component": "container",
           "name": "images",
           "label": "Multi Quotation",
@@ -950,26 +931,7 @@
               "label": "Text 2"
             }
           ]
-        },
-      {
-        "component": "tab",
-        "label": "Advance",
-        "name": "advance"
-      },
-      {
-        "component": "richtext",
-        "valueType": "string",
-        "name": "quotation1",
-        "value": "",
-        "label": "Quotation1"
-      },
-      {
-        "component": "richtext",
-        "name": "attribution12345",
-        "value": "",
-        "label": "Attribution12345",
-        "valueType": "string"
-      }
+        }
     ]
   },
   {
