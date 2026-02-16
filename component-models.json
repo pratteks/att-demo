@@ -936,15 +936,18 @@
       {
           "component": "container",
           "name": "images",
+          "label": "Multi Quotation",
           "multi": true,
           "fields" : [
             {
-              "component": "reference",
-              "name": "image"
+              "component": "text",
+              "name": "text1",
+              "label": "Text 1"
             },
             {
               "component": "text",
-              "name": "imageAlt"
+              "name": "text2",
+              "label": "Text 2"
             }
           ]
         },
