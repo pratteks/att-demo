@@ -934,6 +934,21 @@
         "valueType": "string"
       },
       {
+          "component": "container",
+          "name": "images",
+          "multi": true,
+          "fields" : [
+            {
+              "component": "reference",
+              "name": "image"
+            },
+            {
+              "component": "text",
+              "name": "imageAlt"
+            }
+          ]
+        },
+      {
         "component": "tab",
         "label": "Advance",
         "name": "advance"
