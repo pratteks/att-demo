@@ -915,14 +915,6 @@
     "id": "quote",
     "fields": [
       {
-          "component": "boolean",
-          "name": "muted",
-          "value": false,
-          "label": "Muted",
-          "description": "Start the video muted",
-          "valueType": "boolean"
-        },
-      {
           "component": "container",
           "name": "images",
           "label": "Multi Quotation",
