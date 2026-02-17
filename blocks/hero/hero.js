@@ -1,5 +1,4 @@
 function buildHeroContent(fieldMap, contentFields) {
-  console.log('field map', fieldMap);
   const hero = document.createElement('div');
   hero.className = 'hero';
 
@@ -51,7 +50,7 @@ function buildHeroContent(fieldMap, contentFields) {
   const content = document.createElement('div');
   content.className = 'hero-content';
 
-  if (fieldMap.eyebrowVariation === 'Text') {
+  if (fieldMap.eyebrowVariation === 'text') {
     if (fieldMap.eyebrowText) {
       const eyebrow = document.createElement('p');
       eyebrow.className = 'hero-eyebrow';
@@ -253,8 +252,6 @@ export default function decorate(block) {
   const fieldMap = {};
   fieldNames.forEach((name, index) => {
     const child = children[index];
-    console.log(child.innerHTML, 'child');
-    console.log(name, 'fieldName');
     if (!child) {
       fieldMap[name] = '';
       return;
