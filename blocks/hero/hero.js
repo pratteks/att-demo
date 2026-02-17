@@ -1,4 +1,5 @@
 function buildHeroContent(fieldMap, contentFields) {
+  console.log('field map', fieldMap);
   const hero = document.createElement('div');
   hero.className = 'hero';
 
@@ -17,8 +18,6 @@ function buildHeroContent(fieldMap, contentFields) {
     bg.style.backgroundImage = `url(${fieldMap[imageField]})`;
     hero.append(bg);
   }
-
-  console.log(imageField);
 
   const isVideoEnabled = String(fieldMap.videoEnable).trim().toLowerCase() === 'true';
   if (isVideoEnabled && fieldMap.videoVariation === 'show-video-in-modal' && fieldMap.modalMediaLink) {
