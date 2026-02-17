@@ -1,1 +1,228 @@
+.hero {
+  position: relative;
+  min-height: 320px;
+  padding: var(--hero-padding-top-mobile, 0) var(--hero-padding-right-mobile, 0) var(--hero-padding-bottom-mobile, 0) var(--hero-padding-left-mobile, 0);
+  margin: var(--hero-margin-top-mobile, 0) 0 var(--hero-margin-bottom-mobile, 0) 0;
+}
 
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--hero-overlay-color, transparent);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--hero-text-color, inherit);
+}
+
+.hero-eyebrow {
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-heading {
+  font-size: 32px;
+  line-height: 1.1;
+}
+
+.hero-eyebrow.eyebrow-mobile-inherit { font-size: inherit; }
+.hero-eyebrow.eyebrow-tablet-inherit { font-size: inherit; }
+.hero-eyebrow.eyebrow-desktop-lg { font-size: 16px; }
+
+.hero-heading.heading-mobile-inherit { font-size: inherit; }
+.hero-heading.heading-tablet-inherit { font-size: inherit; }
+.hero-heading.heading-desktop-xxl { font-size: 48px; }
+
+@media (width >= 768px) {
+  .hero-heading.heading-desktop-xxl { font-size: 56px; }
+}
+
+.hero.layoutVariation-hero-left-content .hero-content {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.hero.layoutVariation-hero-center-content .hero-content {
+  align-items: center;
+  text-align: center;
+}
+
+.hero.layoutVariation-hero-center-top-content .hero-content {
+  align-items: center;
+  text-align: center;
+  justify-content: flex-start;
+}
+
+.hero.heightHeroVariation-small-variation { min-height: 320px; }
+.hero.heightHeroVariation-medium-variation { min-height: 480px; }
+.hero.heightHeroVariation-large-variation { min-height: 640px; }
+.hero.heightHeroVariation-custom-height { min-height: var(--hero-custom-height-tablet, 480px); }
+
+.hero.themeColor-base-color { --hero-text-color: var(--text-color, #111); }
+.hero.themeColor-neutral-color { --hero-text-color: var(--neutral-color, #333); }
+.hero.themeColor-accent-color { --hero-text-color: var(--accent-color, #0057d9); }
+.hero.themeColor-dark-accent-color { --hero-text-color: var(--dark-accent-color, #003e9f); }
+.hero.themeColor-light-color-with-image { --hero-text-color: var(--light-color, #fff); }
+.hero.themeColor-dark-color-with-image { --hero-text-color: var(--dark-color, #111); }
+
+.hero.timerMobileThemeColor-base-color { --hero-timer-theme-color: var(--text-color, #111); }
+.hero.timerMobileThemeColor-neutral-color { --hero-timer-theme-color: var(--neutral-color, #333); }
+.hero.timerMobileThemeColor-accent-color { --hero-timer-theme-color: var(--accent-color, #0057d9); }
+.hero.timerMobileThemeColor-dark-accent-color { --hero-timer-theme-color: var(--dark-accent-color, #003e9f); }
+.hero.timerMobileThemeColor-light-color-with-image { --hero-timer-theme-color: var(--light-color, #fff); }
+.hero.timerMobileThemeColor-dark-color-with-image { --hero-timer-theme-color: var(--dark-color, #111); }
+
+.hero.overlayColor-att-blue-000 { --hero-overlay-color: var(--att-blue-000, rgba(0, 0, 0, 0.35)); }
+.hero.overlayColor-cobalt-100 { --hero-overlay-color: var(--cobalt-100, rgba(0, 0, 0, 0.35)); }
+.hero.overlayColor-cobalt-400 { --hero-overlay-color: var(--cobalt-400, rgba(0, 0, 0, 0.4)); }
+.hero.overlayColor-cobalt-600 { --hero-overlay-color: var(--cobalt-600, rgba(0, 0, 0, 0.45)); }
+.hero.overlayColor-cobalt-800 { --hero-overlay-color: var(--cobalt-800, rgba(0, 0, 0, 0.5)); }
+
+.hero[class*="overlaySectionColor-"] { --hero-overlay-section-color: rgba(0, 0, 0, 0.35); }
+.hero[class*="sectionOverlayPosition-"] { --hero-overlay-section-position: center; }
+
+@media (width >= 768px) {
+  .hero {
+    padding: var(--hero-padding-top-tablet, 0) var(--hero-padding-right-tablet, 0) var(--hero-padding-bottom-tablet, 0) var(--hero-padding-left-tablet, 0);
+    margin: var(--hero-margin-top-tablet, 0) 0 var(--hero-margin-bottom-tablet, 0) 0;
+  }
+}
+
+@media (width >= 1024px) {
+  .hero {
+    padding: var(--hero-padding-top-desktop, 0) var(--hero-padding-right-desktop, 0) var(--hero-padding-bottom-desktop, 0) var(--hero-padding-left-desktop, 0);
+    margin: var(--hero-margin-top-desktop, 0) 0 var(--hero-margin-bottom-desktop, 0) 0;
+  }
+
+  .hero.heightHeroVariation-custom-height {
+    min-height: var(--hero-custom-height-desktop, 640px);
+  }
+}
+
+.hero.mobilePaddingLeft-default { --hero-padding-left-mobile: default; }
+.hero.mobilePaddingRight-default { --hero-padding-right-mobile: default; }
+.hero.mobilePaddingTop-default { --hero-padding-top-mobile: default; }
+.hero.mobilePaddingBottom-default { --hero-padding-bottom-mobile: default; }
+.hero.tabletPaddingLeft-default { --hero-padding-left-tablet: default; }
+.hero.tabletPaddingRight-default { --hero-padding-right-tablet: default; }
+.hero.tabletPaddingTop-default { --hero-padding-top-tablet: default; }
+.hero.tabletPaddingBottom-default { --hero-padding-bottom-tablet: default; }
+.hero.desktopPaddingLeft-default { --hero-padding-left-desktop: default; }
+.hero.desktopPaddingRight-default { --hero-padding-right-desktop: default; }
+.hero.desktopPaddingTop-default { --hero-padding-top-desktop: default; }
+.hero.desktopPaddingBottom-default { --hero-padding-bottom-desktop: default; }
+.hero.mobileMarginTop-default { --hero-margin-top-mobile: default; }
+.hero.mobileMarginBottom-default { --hero-margin-bottom-mobile: default; }
+.hero.tabletMarginTop-default { --hero-margin-top-tablet: default; }
+.hero.tabletMarginBottom-default { --hero-margin-bottom-tablet: default; }
+.hero.desktopMarginTop-default { --hero-margin-top-desktop: default; }
+.hero.desktopMarginBottom-default { --hero-margin-bottom-desktop: default; }
+
+.hero.mobilePaddingLeft-0px { --hero-padding-left-mobile: 0px; }
+.hero.mobilePaddingRight-0px { --hero-padding-right-mobile: 0px; }
+.hero.mobilePaddingTop-0px { --hero-padding-top-mobile: 0px; }
+.hero.mobilePaddingBottom-0px { --hero-padding-bottom-mobile: 0px; }
+.hero.tabletPaddingLeft-0px { --hero-padding-left-tablet: 0px; }
+.hero.tabletPaddingRight-0px { --hero-padding-right-tablet: 0px; }
+.hero.tabletPaddingTop-0px { --hero-padding-top-tablet: 0px; }
+.hero.tabletPaddingBottom-0px { --hero-padding-bottom-tablet: 0px; }
+.hero.desktopPaddingLeft-0px { --hero-padding-left-desktop: 0px; }
+.hero.desktopPaddingRight-0px { --hero-padding-right-desktop: 0px; }
+.hero.desktopPaddingTop-0px { --hero-padding-top-desktop: 0px; }
+.hero.desktopPaddingBottom-0px { --hero-padding-bottom-desktop: 0px; }
+.hero.mobileMarginTop-0px { --hero-margin-top-mobile: 0px; }
+.hero.mobileMarginBottom-0px { --hero-margin-bottom-mobile: 0px; }
+.hero.tabletMarginTop-0px { --hero-margin-top-tablet: 0px; }
+.hero.tabletMarginBottom-0px { --hero-margin-bottom-tablet: 0px; }
+.hero.desktopMarginTop-0px { --hero-margin-top-desktop: 0px; }
+.hero.desktopMarginBottom-0px { --hero-margin-bottom-desktop: 0px; }
+
+.hero.mobilePaddingLeft-8px { --hero-padding-left-mobile: 8px; }
+.hero.mobilePaddingRight-8px { --hero-padding-right-mobile: 8px; }
+.hero.mobilePaddingTop-8px { --hero-padding-top-mobile: 8px; }
+.hero.mobilePaddingBottom-8px { --hero-padding-bottom-mobile: 8px; }
+.hero.tabletPaddingLeft-8px { --hero-padding-left-tablet: 8px; }
+.hero.tabletPaddingRight-8px { --hero-padding-right-tablet: 8px; }
+.hero.tabletPaddingTop-8px { --hero-padding-top-tablet: 8px; }
+.hero.tabletPaddingBottom-8px { --hero-padding-bottom-tablet: 8px; }
+.hero.desktopPaddingLeft-8px { --hero-padding-left-desktop: 8px; }
+.hero.desktopPaddingRight-8px { --hero-padding-right-desktop: 8px; }
+.hero.desktopPaddingTop-8px { --hero-padding-top-desktop: 8px; }
+.hero.desktopPaddingBottom-8px { --hero-padding-bottom-desktop: 8px; }
+.hero.mobileMarginTop-8px { --hero-margin-top-mobile: 8px; }
+.hero.mobileMarginBottom-8px { --hero-margin-bottom-mobile: 8px; }
+.hero.tabletMarginTop-8px { --hero-margin-top-tablet: 8px; }
+.hero.tabletMarginBottom-8px { --hero-margin-bottom-tablet: 8px; }
+.hero.desktopMarginTop-8px { --hero-margin-top-desktop: 8px; }
+.hero.desktopMarginBottom-8px { --hero-margin-bottom-desktop: 8px; }
+
+.hero.mobilePaddingLeft-16px { --hero-padding-left-mobile: 16px; }
+.hero.mobilePaddingRight-16px { --hero-padding-right-mobile: 16px; }
+.hero.mobilePaddingTop-16px { --hero-padding-top-mobile: 16px; }
+.hero.mobilePaddingBottom-16px { --hero-padding-bottom-mobile: 16px; }
+.hero.tabletPaddingLeft-16px { --hero-padding-left-tablet: 16px; }
+.hero.tabletPaddingRight-16px { --hero-padding-right-tablet: 16px; }
+.hero.tabletPaddingTop-16px { --hero-padding-top-tablet: 16px; }
+.hero.tabletPaddingBottom-16px { --hero-padding-bottom-tablet: 16px; }
+.hero.desktopPaddingLeft-16px { --hero-padding-left-desktop: 16px; }
+.hero.desktopPaddingRight-16px { --hero-padding-right-desktop: 16px; }
+.hero.desktopPaddingTop-16px { --hero-padding-top-desktop: 16px; }
+.hero.desktopPaddingBottom-16px { --hero-padding-bottom-desktop: 16px; }
+.hero.mobileMarginTop-16px { --hero-margin-top-mobile: 16px; }
+.hero.mobileMarginBottom-16px { --hero-margin-bottom-mobile: 16px; }
+.hero.tabletMarginTop-16px { --hero-margin-top-tablet: 16px; }
+.hero.tabletMarginBottom-16px { --hero-margin-bottom-tablet: 16px; }
+.hero.desktopMarginTop-16px { --hero-margin-top-desktop: 16px; }
+.hero.desktopMarginBottom-16px { --hero-margin-bottom-desktop: 16px; }
+
+.hero.mobilePaddingLeft-24px { --hero-padding-left-mobile: 24px; }
+.hero.mobilePaddingRight-24px { --hero-padding-right-mobile: 24px; }
+.hero.mobilePaddingTop-24px { --hero-padding-top-mobile: 24px; }
+.hero.mobilePaddingBottom-24px { --hero-padding-bottom-mobile: 24px; }
+.hero.tabletPaddingLeft-24px { --hero-padding-left-tablet: 24px; }
+.hero.tabletPaddingRight-24px { --hero-padding-right-tablet: 24px; }
+.hero.tabletPaddingTop-24px { --hero-padding-top-tablet: 24px; }
+.hero.tabletPaddingBottom-24px { --hero-padding-bottom-tablet: 24px; }
+.hero.desktopPaddingLeft-24px { --hero-padding-left-desktop: 24px; }
+.hero.desktopPaddingRight-24px { --hero-padding-right-desktop: 24px; }
+.hero.desktopPaddingTop-24px { --hero-padding-top-desktop: 24px; }
+.hero.desktopPaddingBottom-24px { --hero-padding-bottom-desktop: 24px; }
+.hero.mobileMarginTop-24px { --hero-margin-top-mobile: 24px; }
+.hero.mobileMarginBottom-24px { --hero-margin-bottom-mobile: 24px; }
+.hero.tabletMarginTop-24px { --hero-margin-top-tablet: 24px; }
+.hero.tabletMarginBottom-24px { --hero-margin-bottom-tablet: 24px; }
+.hero.desktopMarginTop-24px { --hero-margin-top-desktop: 24px; }
+.hero.desktopMarginBottom-24px { --hero-margin-bottom-desktop: 24px; }
+
+.hero.mobilePaddingLeft-32px { --hero-padding-left-mobile: 32px; }
+.hero.mobilePaddingRight-32px { --hero-padding-right-mobile: 32px; }
+.hero.mobilePaddingTop-32px { --hero-padding-top-mobile: 32px; }
+.hero.mobilePaddingBottom-32px { --hero-padding-bottom-mobile: 32px; }
+.hero.tabletPaddingLeft-32px { --hero-padding-left-tablet: 32px; }
+.hero.tabletPaddingRight-32px { --hero-padding-right-tablet: 32px; }
+.hero.tabletPaddingTop-32px { --hero-padding-top-tablet: 32px; }
+.hero.tabletPaddingBottom-32px { --hero-padding-bottom-tablet: 32px; }
+.hero.desktopPaddingLeft-32px { --hero-padding-left-desktop: 32px; }
+.hero.desktopPaddingRight-32px { --hero-padding-right-desktop: 32px; }
+.hero.desktopPaddingTop-32px { --hero-padding-top-desktop: 32px; }
+.hero.desktopPaddingBottom-32px { --hero-padding-bottom-desktop: 32px; }
+.hero.mobileMarginTop-32px { --hero-margin-top-mobile: 32px; }
+.hero.mobileMarginBottom-32px { --hero-margin-bottom-mobile: 32px; }
+.hero.tabletMarginTop-32px { --hero-margin-top-tablet: 32px; }
+.hero.tabletMarginBottom-32px { --hero-margin-bottom-tablet: 32px; }
+.hero.desktopMarginTop-32px { --hero-margin-top-desktop: 32px; }
+.hero.desktopMarginBottom-32px { --hero-margin-bottom-desktop: 32px; }
