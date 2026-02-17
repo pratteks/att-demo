@@ -51,8 +51,6 @@ function buildHeroContent(fieldMap, contentFields) {
   const content = document.createElement('div');
   content.className = 'hero-content';
 
-  console.log('eyebrow variation', fieldMap.eyebrowVariation);
-
   if (fieldMap.eyebrowVariation === 'Text') {
     if (fieldMap.eyebrowText) {
       const eyebrow = document.createElement('p');
@@ -266,6 +264,8 @@ export default function decorate(block) {
   const fieldMap = {};
   fieldNames.forEach((name, index) => {
     const child = children[index];
+    console.log(child.innerHTML, 'child');
+    console.log(name, 'fieldName');
     if (!child) {
       fieldMap[name] = '';
       return;
