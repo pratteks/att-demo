@@ -18,6 +18,8 @@ function buildHeroContent(fieldMap, contentFields) {
     hero.append(bg);
   }
 
+  console.log(imageField);
+
   const isVideoEnabled = String(fieldMap.videoEnable).trim().toLowerCase() === 'true';
   if (isVideoEnabled && fieldMap.videoVariation === 'show-video-in-modal' && fieldMap.modalMediaLink) {
     const video = document.createElement('video');
@@ -50,7 +52,9 @@ function buildHeroContent(fieldMap, contentFields) {
   const content = document.createElement('div');
   content.className = 'hero-content';
 
-  if (fieldMap.eyebrowVariation === 'text') {
+  console.log('eyebrow variation', fieldMap.eyebrowVariation);
+
+  if (fieldMap.eyebrowVariation === 'Text') {
     if (fieldMap.eyebrowText) {
       const eyebrow = document.createElement('p');
       eyebrow.className = 'hero-eyebrow';
@@ -303,6 +307,6 @@ export default function decorate(block) {
   }
 
   const hero = buildHeroContent(fieldMap, contentFields);
-  block.textContent = '';
+  block.innerHTML = '';
   block.append(hero);
 }
