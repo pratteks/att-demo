@@ -38,6 +38,41 @@
   font-size: 32px;
   line-height: 1.1;
 }
+.hero-description {
+  max-width: min(64ch, 100%);
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.hero-description p {
+  margin: 0;
+}
+
+.hero-description p + p {
+  margin-top: 12px;
+}
+
+.hero-description a,
+.hero-legal a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.hero-legal {
+  max-width: min(72ch, 100%);
+  font-size: 12px;
+  line-height: 1.45;
+  opacity: 0.9;
+}
+
+.hero-legal p {
+  margin: 0;
+}
+
+.hero-legal p + p {
+  margin-top: 8px;
+}
 
 .hero-eyebrow.eyebrow-mobile-inherit { font-size: inherit; }
 .hero-eyebrow.eyebrow-tablet-inherit { font-size: inherit; }
@@ -226,3 +261,4 @@
 .hero.tabletMarginBottom-32px { --hero-margin-bottom-tablet: 32px; }
 .hero.desktopMarginTop-32px { --hero-margin-top-desktop: 32px; }
 .hero.desktopMarginBottom-32px { --hero-margin-bottom-desktop: 32px; }
+

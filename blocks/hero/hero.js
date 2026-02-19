@@ -3,14 +3,15 @@ function buildHeroContent(fieldMap, contentFields) {
   hero.className = 'hero';
 
   const imageFieldOrder = [
-    'desktopFullWidthImageBackgroundAndEnding',
     'desktopFullWidthImageBeginning',
-    'tabletFullWidthImageBackgroundAndEnding',
+    'desktopFullWidthImageBackgroundAndEnding',
     'tabletFullWidthImageBeginning',
-    'mobileFullWidthImageBackgroundAndEnding',
+    'tabletFullWidthImageBackgroundAndEnding',
     'mobileFullWidthImageBeginning',
+    'mobileFullWidthImageBackgroundAndEnding',
   ];
   const imageField = imageFieldOrder.find((name) => contentFields.includes(name) && fieldMap[name]);
+  console.log('image field', imageField);
   if (imageField) {
     const bg = document.createElement('div');
     bg.className = 'hero-bg';

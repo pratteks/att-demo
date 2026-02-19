@@ -234,102 +234,86 @@
               ]
             },
             {
-              "component": "container",
-              "name": "eyebrow",
-              "label": "Eyebrow",
-              "collapsible": true,
-              "fields": [
+              "component": "text",
+              "name": "eyebrowText",
+              "label": "Eyebrow text",
+              "valueType": "string"
+            },
+            {
+              "component": "select",
+              "name": "eyebrowDesktopSize",
+              "label": "Desktop size",
+              "valueType": "string",
+              "options": [
                 {
-                  "component": "text",
-                  "name": "eyebrowText",
-                  "label": "Eyebrow text",
-                  "valueType": "string"
-                },
-                {
-                  "component": "select",
-                  "name": "eyebrowDesktopSize",
-                  "label": "Desktop size",
-                  "valueType": "string",
-                  "options": [
-                    {
-                      "name": "LG",
-                      "value": "lg"
-                    }
-                  ]
-                },
-                {
-                  "component": "select",
-                  "name": "eyebrowTabletSize",
-                  "label": "Tablet size",
-                  "valueType": "string",
-                  "options": [
-                    {
-                      "name": "inherit",
-                      "value": "inherit"
-                    }
-                  ]
-                },
-                {
-                  "component": "select",
-                  "name": "eyebrowMobileSize",
-                  "label": "Mobile size",
-                  "valueType": "string",
-                  "options": [
-                    {
-                      "name": "inherit",
-                      "value": "inherit"
-                    }
-                  ]
+                  "name": "LG",
+                  "value": "lg"
                 }
               ]
             },
             {
-              "component": "container",
-              "name": "heading",
+              "component": "select",
+              "name": "eyebrowTabletSize",
+              "label": "Tablet size",
+              "valueType": "string",
+              "options": [
+                {
+                  "name": "inherit",
+                  "value": "inherit"
+                }
+              ]
+            },
+            {
+              "component": "select",
+              "name": "eyebrowMobileSize",
+              "label": "Mobile size",
+              "valueType": "string",
+              "options": [
+                {
+                  "name": "inherit",
+                  "value": "inherit"
+                }
+              ]
+            },
+            {
+              "component": "text",
+              "name": "headingText",
               "label": "Heading",
-              "collapsible": true,
-              "fields": [
+              "valueType": "string"
+            },
+            {
+              "component": "select",
+              "name": "headingDesktopSize",
+              "label": "Desktop size",
+              "valueType": "string",
+              "options": [
                 {
-                  "component": "text",
-                  "name": "headingText",
-                  "label": "Heading",
-                  "valueType": "string"
-                },
+                  "name": "XXL",
+                  "value": "xxl"
+                }
+              ]
+            },
+            {
+              "component": "select",
+              "name": "headingTabletSize",
+              "label": "Tablet size",
+              "valueType": "string",
+              "options": [
                 {
-                  "component": "select",
-                  "name": "headingDesktopSize",
-                  "label": "Desktop size",
-                  "valueType": "string",
-                  "options": [
-                    {
-                      "name": "XXL",
-                      "value": "xxl"
-                    }
-                  ]
-                },
+                  "name": "inherit",
+                  "value": "inherit"
+                }
+              ]
+            },
+            {
+              "component": "select",
+              "name": "headingMobileSize",
+              "label": "Mobile size",
+              "valueType": "string",
+              "options": [
                 {
-                  "component": "select",
-                  "name": "headingTabletSize",
-                  "label": "Tablet size",
-                  "valueType": "string",
-                  "options": [
-                    {
-                      "name": "inherit",
-                      "value": "inherit"
-                    }
-                  ]
-                },
-                {
-                  "component": "select",
-                  "name": "headingMobileSize",
-                  "label": "Mobile size",
-                  "valueType": "string",
-                  "options": [
-                    {
-                      "name": "inherit",
-                      "value": "inherit"
-                    }
-                  ]
+                  "name": "inherit",
+                  "value": "inherit"
                 }
               ]
             },
