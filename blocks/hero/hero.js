@@ -11,7 +11,6 @@ function buildHeroContent(fieldMap, contentFields) {
     'mobileFullWidthImageBackgroundAndEnding',
   ];
   const imageField = imageFieldOrder.find((name) => contentFields.includes(name) && fieldMap[name]);
-  console.log('image field', imageField);
   if (imageField) {
     const bg = document.createElement('div');
     bg.className = 'hero-bg';
