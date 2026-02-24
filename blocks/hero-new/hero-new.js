@@ -1,3 +1,5 @@
+import { decorateBlock, loadBlock } from '../../scripts/aem.js';
+
 // Purpose: Define all model fields in authored row order with type and component metadata.
 const MODEL_FIELD_ORDER = [
   {
@@ -314,7 +316,8 @@ const parseCtaRow = (row) => {
     ...field,
     fieldValue: parseFieldValue(cells[index], field.fieldComponent),
   }));
-  const hasLabel = String(ctaFields[0]?.fieldValue || '').trim();
+  const ctaLabelField = ctaFields.find((field) => field.fieldName === 'ctaLabel');
+  const hasLabel = String(ctaLabelField?.fieldValue || '').trim();
 
   return hasLabel ? ctaFields : null;
 };
@@ -358,16 +361,6 @@ const resolveReferenceUrl = (referenceRow) => {
 const getListFieldValue = (fieldList, fieldName) => {
   const field = fieldList.find((listField) => listField.fieldName === fieldName);
   return field ? field.fieldValue : '';
-};
-
-// Purpose: Resolve CTA style token from display type selection.
-const resolveCtaStyle = (displayTypeValue) => {
-  const normalized = String(displayTypeValue || '').trim().toLowerCase();
-  if (normalized.includes('secondary')) {
-    return 'secondary';
-  }
-
-  return 'primary';
 };
 
 // Purpose: Apply styling classes and variables from styling fields.
@@ -432,54 +425,44 @@ const applyBackgroundImage = (heroNew, blockConfig) => {
   }
 };
 
-// Purpose: Build CTA anchor element from parsed CTA field objects.
-const buildCtaLink = (ctaConfig) => {
-  const ctaLabel = String(getListFieldValue(ctaConfig, 'ctaLabel') || '').trim();
-  if (!ctaLabel) {
-    return null;
+// Purpose: Build a CTA block-item cell from authored field value.
+const buildCtaCell = (fieldValue) => {
+  const cell = document.createElement('div');
+  if (fieldValue instanceof Element) {
+    cell.append(fieldValue.cloneNode(true));
+    return cell;
   }
 
-  const displayType = getListFieldValue(ctaConfig, 'displayType');
-  const ctaStyle = resolveCtaStyle(displayType);
-  const pageOrMediaLink = resolveReferenceUrl(getListFieldValue(ctaConfig, 'pageOrMediaLink'));
-  const externalLink = resolveReferenceUrl(getListFieldValue(ctaConfig, 'externalLink'));
-  const assetsLinks = resolveReferenceUrl(getListFieldValue(ctaConfig, 'assetsLinks'));
-  const ctaLink = pageOrMediaLink || externalLink || assetsLinks || '#';
-  const noFollow = Boolean(getListFieldValue(ctaConfig, 'noFollow'));
-  const openNewWindow = Boolean(getListFieldValue(ctaConfig, 'openNewWindow'));
-  const cta = document.createElement('a');
-  cta.className = 'hero-new-cta-link';
-  cta.classList.add(`hero-new-cta-link-${ctaStyle}`);
-  cta.href = ctaLink;
-  cta.textContent = ctaLabel;
-  if (noFollow) {
-    cta.rel = 'nofollow';
-  }
+  const paragraph = document.createElement('p');
+  paragraph.textContent = String(fieldValue ?? '');
+  cell.append(paragraph);
 
-  if (openNewWindow) {
-    cta.target = '_blank';
-    cta.rel = cta.rel ? `${cta.rel} noopener noreferrer` : 'noopener noreferrer';
-  }
-
-  return cta;
+  return cell;
 };
 
-// Purpose: Build repeatable CTA group and place it below legal text.
-const buildCtaGroup = (ctaConfigs) => {
+// Purpose: Build a CTA block-item row from parsed CTA field objects.
+const buildCtaRow = (ctaConfig) => {
+  const row = document.createElement('div');
+  CTA_FIELD_ORDER.forEach((field) => {
+    row.append(buildCtaCell(getListFieldValue(ctaConfig, field.fieldName)));
+  });
+
+  return row;
+};
+
+// Purpose: Build a nested CTA block element so CTA decorate can run.
+const buildNestedCtaBlock = (ctaConfigs) => {
   if (!ctaConfigs.length) {
     return null;
   }
 
-  const ctaGroup = document.createElement('div');
-  ctaGroup.className = 'hero-new-cta-group';
+  const ctaBlock = document.createElement('div');
+  ctaBlock.className = 'cta';
   ctaConfigs.forEach((ctaConfig) => {
-    const cta = buildCtaLink(ctaConfig);
-    if (cta) {
-      ctaGroup.append(cta);
-    }
+    ctaBlock.append(buildCtaRow(ctaConfig));
   });
 
-  return ctaGroup.childElementCount ? ctaGroup : null;
+  return ctaBlock.childElementCount ? ctaBlock : null;
 };
 
 // Purpose: Build hero-new content markup from blockConfig field objects.
@@ -521,8 +504,11 @@ const buildHeroNewContent = (blockConfig, ctaConfigs) => {
     content.append(legal);
   }
 
-  const ctaGroup = buildCtaGroup(ctaConfigs);
-  if (ctaGroup) {
+  const nestedCtaBlock = buildNestedCtaBlock(ctaConfigs);
+  if (nestedCtaBlock) {
+    const ctaGroup = document.createElement('div');
+    ctaGroup.className = 'hero-new-cta-group';
+    ctaGroup.append(nestedCtaBlock);
     content.append(ctaGroup);
   }
 
@@ -531,12 +517,19 @@ const buildHeroNewContent = (blockConfig, ctaConfigs) => {
 };
 
 // Purpose: Apply a single DOM update pass from parsed blockConfig.
-const updateHeroNewDom = (block, blockConfig, ctaConfigs) => {
+const updateHeroNewDom = async (block, blockConfig, ctaConfigs) => {
   block.innerHTML = '';
-  block.append(buildHeroNewContent(blockConfig, ctaConfigs));
+  const heroNewContent = buildHeroNewContent(blockConfig, ctaConfigs);
+  block.append(heroNewContent);
+
+  const ctaBlock = heroNewContent.querySelector('.cta');
+  if (ctaBlock) {
+    decorateBlock(ctaBlock);
+    await loadBlock(ctaBlock);
+  }
 };
 
-export default function decorate(block) {
+export default async function decorate(block) {
   const rows = [...block.children];
   const modelRows = rows.slice(0, MODEL_FIELD_ORDER.length);
   const ctaRows = rows.slice(MODEL_FIELD_ORDER.length);
@@ -544,5 +537,5 @@ export default function decorate(block) {
   const ctaConfigs = buildCtaConfigs(ctaRows);
   console.log('hero-new block config', { fields: blockConfig, ctas: ctaConfigs });
 
-  updateHeroNewDom(block, blockConfig, ctaConfigs);
+  await updateHeroNewDom(block, blockConfig, ctaConfigs);
 }
