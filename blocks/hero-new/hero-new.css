@@ -51,11 +51,25 @@
   --hero-new-cta-border-style: solid;
   --hero-new-cta-border-radius: var(--border-radius-base);
   --hero-new-cta-text-decoration: none;
-  --hero-new-cta-primary-background: var(--main-accent-color);
-  --hero-new-cta-primary-color: var(--text-light);
+  --hero-new-cta-theme-color: var(--hero-new-text-color);
+  --hero-new-cta-on-theme-color: var(--theme-color-light-with-image);
+  --hero-new-cta-primary-background: var(--hero-new-cta-theme-color);
+  --hero-new-cta-primary-color: var(--hero-new-cta-on-theme-color);
+  --hero-new-cta-primary-border-color: var(--hero-new-cta-theme-color);
   --hero-new-cta-secondary-background: transparent;
-  --hero-new-cta-secondary-color: var(--main-accent-color);
-  --hero-new-cta-secondary-border-color: var(--main-accent-color);
+  --hero-new-cta-secondary-color: var(--hero-new-cta-theme-color);
+  --hero-new-cta-secondary-border-color: var(--hero-new-cta-theme-color);
+  --hero-new-cta-tertiary-background: transparent;
+  --hero-new-cta-tertiary-color: var(--hero-new-cta-theme-color);
+  --hero-new-cta-tertiary-border-color: var(--hero-new-cta-theme-color);
+  --hero-new-cta-text-background: transparent;
+  --hero-new-cta-text-color: var(--hero-new-cta-theme-color);
+  --hero-new-cta-text-border-color: var(--hero-new-cta-theme-color);
+  --hero-new-cta-dark-background: var(--theme-color-dark-with-image);
+  --hero-new-cta-dark-color: var(--theme-color-light-with-image);
+  --hero-new-cta-dark-border-color: var(--theme-color-dark-with-image);
+  --hero-new-cta-layout-direction: row;
+  --hero-new-cta-layout-align-items: center;
   --hero-new-background-image-current:
     var(--hero-new-background-image-mobile, var(--hero-new-background-image-desktop, none));
 }
@@ -134,29 +148,65 @@
 .hero-new-cta-group {
   margin-top: var(--hero-new-cta-margin-top);
   display: var(--hero-new-display);
-  flex-direction: var(--hero-new-flex-direction-row);
+  flex-direction: var(--hero-new-cta-layout-direction);
   flex-wrap: var(--hero-new-flex-wrap);
+  align-items: var(--hero-new-cta-layout-align-items);
   gap: var(--hero-new-cta-gap);
 }
 
 .hero-new-cta-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: var(--hero-new-cta-border-radius);
   padding: var(--hero-new-cta-padding-block) var(--hero-new-cta-padding-inline);
   text-decoration: var(--hero-new-cta-text-decoration);
   border-style: var(--hero-new-cta-border-style);
   border-width: var(--hero-new-cta-border-width);
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .hero-new-cta-link-primary {
   background-color: var(--hero-new-cta-primary-background);
   color: var(--hero-new-cta-primary-color);
-  border-color: var(--hero-new-cta-primary-background);
+  border-color: var(--hero-new-cta-primary-border-color);
 }
 
 .hero-new-cta-link-secondary {
   background-color: var(--hero-new-cta-secondary-background);
   color: var(--hero-new-cta-secondary-color);
   border-color: var(--hero-new-cta-secondary-border-color);
+}
+
+.hero-new-cta-link-tertiary {
+  background-color: var(--hero-new-cta-tertiary-background);
+  color: var(--hero-new-cta-tertiary-color);
+  border-color: var(--hero-new-cta-tertiary-border-color);
+  border-radius: calc(var(--hero-new-cta-border-radius) * 2);
+}
+
+.hero-new-cta-link-text {
+  background-color: var(--hero-new-cta-text-background);
+  color: var(--hero-new-cta-text-color);
+  border-color: var(--hero-new-cta-text-border-color);
+  border-radius: calc(var(--hero-new-cta-border-radius) * 2);
+}
+
+.hero-new-cta-link-dark {
+  background-color: var(--hero-new-cta-dark-background);
+  color: var(--hero-new-cta-dark-color);
+  border-color: var(--hero-new-cta-dark-border-color);
+}
+
+.hero-new-cta-group-layout-stacked {
+  --hero-new-cta-layout-direction: column;
+  --hero-new-cta-layout-align-items: flex-start;
+}
+
+.hero-new-cta-group-layout-stacked .hero-new-cta-link {
+  width: 100%;
+  max-width: 320px;
 }
 
 .hero-new.themeColor-theme-color-base {
@@ -177,6 +227,7 @@
 
 .hero-new.themeColor-theme-color-light-with-image {
   --hero-new-text-color: var(--theme-color-light-with-image);
+  --hero-new-cta-on-theme-color: var(--theme-color-dark-with-image);
 }
 
 .hero-new.themeColor-theme-color-dark-with-image {

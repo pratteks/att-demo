@@ -502,11 +502,33 @@ const applyTypographySizing = (heroNew, blockConfig) => {
 // Purpose: Resolve CTA style token from display type selection.
 const resolveCtaStyle = (displayTypeValue) => {
   const normalized = String(displayTypeValue || '').trim().toLowerCase();
+  if (normalized.includes('tertiary')) {
+    return 'tertiary';
+  }
+
+  if (normalized.includes('text') || normalized.includes('link')) {
+    return 'text';
+  }
+
+  if (normalized.includes('dark')) {
+    return 'dark';
+  }
+
   if (normalized.includes('secondary')) {
     return 'secondary';
   }
 
   return 'primary';
+};
+
+// Purpose: Resolve CTA group layout token from CTA layout selection.
+const resolveCtaLayout = (layoutValue) => {
+  const normalized = String(layoutValue || '').trim().toLowerCase();
+  if (normalized === 'stacked') {
+    return 'stacked';
+  }
+
+  return 'row';
 };
 
 // Purpose: Apply styling classes and variables from styling fields.
@@ -605,13 +627,15 @@ const buildCtaLink = (ctaConfig) => {
 };
 
 // Purpose: Build repeatable CTA group and place it below legal text.
-const buildCtaGroup = (ctaConfigs) => {
+const buildCtaGroup = (ctaConfigs, ctaLayoutValue) => {
   if (!ctaConfigs.length) {
     return null;
   }
 
+  const ctaLayout = resolveCtaLayout(ctaLayoutValue);
   const ctaGroup = document.createElement('div');
   ctaGroup.className = 'hero-new-cta-group';
+  ctaGroup.classList.add(`hero-new-cta-group-layout-${ctaLayout}`);
   ctaConfigs.forEach((ctaConfig) => {
     const cta = buildCtaLink(ctaConfig);
     if (cta) {
@@ -662,7 +686,8 @@ const buildHeroNewContent = (blockConfig, ctaConfigs) => {
     content.append(legal);
   }
 
-  const ctaGroup = buildCtaGroup(ctaConfigs);
+  const ctaLayout = getFieldValue(blockConfig, 'ctaLayout');
+  const ctaGroup = buildCtaGroup(ctaConfigs, ctaLayout);
   if (ctaGroup) {
     content.append(ctaGroup);
   }
