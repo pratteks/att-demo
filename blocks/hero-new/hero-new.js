@@ -314,7 +314,16 @@ const buildBlockConfig = (rows) => MODEL_FIELD_ORDER.map((field, index) => ({
 
 // Purpose: Parse a CTA row into the same field object format used by blockConfig.
 const parseCtaRow = (row) => {
-  const cells = [...row.children];
+  const hasDirectCells = row.children.length >= CTA_FIELD_ORDER.length;
+  const nestedContainer = row.firstElementChild;
+  const hasNestedCells = nestedContainer
+    && nestedContainer.children
+    && nestedContainer.children.length >= CTA_FIELD_ORDER.length;
+  const cells = hasDirectCells
+    ? [...row.children]
+    : hasNestedCells
+      ? [...nestedContainer.children]
+      : [];
   const ctaFields = CTA_FIELD_ORDER.map((field, index) => ({
     ...field,
     fieldValue: parseFieldValue(cells[index], field.fieldComponent),
@@ -325,10 +334,44 @@ const parseCtaRow = (row) => {
   return hasLabel ? ctaFields : null;
 };
 
+// Purpose: Parse flat CTA rows (field-per-row) into grouped CTA configs.
+const buildFlatCtaConfigs = (rows) => {
+  const chunkSize = CTA_FIELD_ORDER.length;
+  const ctaConfigs = [];
+
+  for (let index = 0; index < rows.length; index += chunkSize) {
+    const chunkRows = rows.slice(index, index + chunkSize);
+    if (chunkRows.length < chunkSize) {
+      continue;
+    }
+
+    const ctaFields = CTA_FIELD_ORDER.map((field, fieldIndex) => ({
+      ...field,
+      fieldValue: parseFieldValue(chunkRows[fieldIndex], field.fieldComponent),
+    }));
+    const ctaLabelField = ctaFields.find((field) => field.fieldName === 'ctaLabel');
+    const hasLabel = String(ctaLabelField?.fieldValue || '').trim();
+
+    if (hasLabel) {
+      ctaConfigs.push(ctaFields);
+    }
+  }
+
+  return ctaConfigs;
+};
+
 // Purpose: Build repeatable CTA configs from authored rows after model field rows.
-const buildCtaConfigs = (rows) => rows
-  .map(parseCtaRow)
-  .filter((ctaConfig) => ctaConfig);
+const buildCtaConfigs = (rows) => {
+  const rowBasedConfigs = rows
+    .map(parseCtaRow)
+    .filter((ctaConfig) => ctaConfig);
+
+  if (rowBasedConfigs.length) {
+    return rowBasedConfigs;
+  }
+
+  return buildFlatCtaConfigs(rows);
+};
 
 // Purpose: Resolve a field object by name from the blockConfig list.
 const getField = (blockConfig, fieldName) => (
@@ -399,31 +442,39 @@ const getFontSizeValue = (selectedToken, viewport) => {
 
 // Purpose: Apply authored eyebrow and heading size selections across breakpoints.
 const applyTypographySizing = (heroNew, blockConfig) => {
+  const eyebrowTabletSelection = String(
+    getFieldValue(blockConfig, 'eyebrowTabletFontSizeToken') || '',
+  ).trim().toLowerCase();
+  const eyebrowMobileSelection = String(
+    getFieldValue(blockConfig, 'eyebrowMobileFontSizeToken') || '',
+  ).trim().toLowerCase();
   const eyebrowDesktop = getFontSizeValue(
     getFieldValue(blockConfig, 'eyebrowDesktopFontSizeToken'),
     'desktop',
   );
-  const eyebrowTabletSelected = getFieldValue(blockConfig, 'eyebrowTabletFontSizeToken');
-  const eyebrowMobileSelected = getFieldValue(blockConfig, 'eyebrowMobileFontSizeToken');
-  const eyebrowTablet = eyebrowTabletSelected === 'inherit'
+  const eyebrowTablet = eyebrowTabletSelection === 'inherit'
     ? eyebrowDesktop
-    : getFontSizeValue(eyebrowTabletSelected, 'tablet');
-  const eyebrowMobile = eyebrowMobileSelected === 'inherit'
+    : getFontSizeValue(eyebrowTabletSelection, 'tablet');
+  const eyebrowMobile = eyebrowMobileSelection === 'inherit'
     ? (eyebrowTablet || eyebrowDesktop)
-    : getFontSizeValue(eyebrowMobileSelected, 'mobile');
+    : getFontSizeValue(eyebrowMobileSelection, 'mobile');
 
+  const headingTabletSelection = String(
+    getFieldValue(blockConfig, 'headingTabletFontSizeToken') || '',
+  ).trim().toLowerCase();
+  const headingMobileSelection = String(
+    getFieldValue(blockConfig, 'headingMobileFontSizeToken') || '',
+  ).trim().toLowerCase();
   const headingDesktop = getFontSizeValue(
     getFieldValue(blockConfig, 'headingDesktopFontSizeToken'),
     'desktop',
   );
-  const headingTabletSelected = getFieldValue(blockConfig, 'headingTabletFontSizeToken');
-  const headingMobileSelected = getFieldValue(blockConfig, 'headingMobileFontSizeToken');
-  const headingTablet = headingTabletSelected === 'inherit'
+  const headingTablet = headingTabletSelection === 'inherit'
     ? headingDesktop
-    : getFontSizeValue(headingTabletSelected, 'tablet');
-  const headingMobile = headingMobileSelected === 'inherit'
+    : getFontSizeValue(headingTabletSelection, 'tablet');
+  const headingMobile = headingMobileSelection === 'inherit'
     ? (headingTablet || headingDesktop)
-    : getFontSizeValue(headingMobileSelected, 'mobile');
+    : getFontSizeValue(headingMobileSelection, 'mobile');
 
   if (eyebrowDesktop) {
     heroNew.style.setProperty('--hero-new-eyebrow-size-desktop', eyebrowDesktop);
