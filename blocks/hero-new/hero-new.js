@@ -314,6 +314,7 @@ const buildBlockConfig = (rows) => MODEL_FIELD_ORDER.map((field, index) => ({
 
 // Purpose: Parse a CTA row into the same field object format used by blockConfig.
 const parseCtaRow = (row) => {
+  console.log('hero-new: parseCtaRow input row', row);
   const hasDirectCells = row.children.length >= CTA_FIELD_ORDER.length;
   const nestedContainer = row.firstElementChild;
   const hasNestedCells = nestedContainer
@@ -330,12 +331,14 @@ const parseCtaRow = (row) => {
   }));
   const ctaLabelField = ctaFields.find((field) => field.fieldName === 'ctaLabel');
   const hasLabel = String(ctaLabelField?.fieldValue || '').trim();
+  console.log('hero-new: parseCtaRow output', { ctaFields, hasLabel });
 
   return hasLabel ? ctaFields : null;
 };
 
 // Purpose: Parse flat CTA rows (field-per-row) into grouped CTA configs.
 const buildFlatCtaConfigs = (rows) => {
+  console.log('hero-new: buildFlatCtaConfigs input rows', rows);
   const chunkSize = CTA_FIELD_ORDER.length;
   const ctaConfigs = [];
 
@@ -356,21 +359,28 @@ const buildFlatCtaConfigs = (rows) => {
       ctaConfigs.push(ctaFields);
     }
   }
+  console.log('hero-new: buildFlatCtaConfigs output ctaConfigs', ctaConfigs);
 
   return ctaConfigs;
 };
 
 // Purpose: Build repeatable CTA configs from authored rows after model field rows.
 const buildCtaConfigs = (rows) => {
+  console.log('hero-new: buildCtaConfigs input rows', rows);
   const rowBasedConfigs = rows
     .map(parseCtaRow)
     .filter((ctaConfig) => ctaConfig);
+  console.log('hero-new: buildCtaConfigs rowBasedConfigs', rowBasedConfigs);
 
   if (rowBasedConfigs.length) {
+    console.log('hero-new: buildCtaConfigs returning rowBasedConfigs');
     return rowBasedConfigs;
   }
 
-  return buildFlatCtaConfigs(rows);
+  const flatConfigs = buildFlatCtaConfigs(rows);
+  console.log('hero-new: buildCtaConfigs returning flatConfigs', flatConfigs);
+
+  return flatConfigs;
 };
 
 // Purpose: Resolve a field object by name from the blockConfig list.
@@ -680,10 +690,16 @@ const updateHeroNewDom = (block, blockConfig, ctaConfigs) => {
 
 export default function decorate(block) {
   const rows = [...block.children];
+  console.log('hero-new: decorate all rows', rows);
   const modelRows = rows.slice(0, MODEL_FIELD_ORDER.length);
   const ctaRows = rows.slice(MODEL_FIELD_ORDER.length);
+  console.log('hero-new: decorate modelRows', modelRows);
+  console.log('hero-new: decorate ctaRows', ctaRows);
   const blockConfig = buildBlockConfig(modelRows);
+  console.log('hero-new: decorate blockConfig', blockConfig);
   const ctaConfigs = buildCtaConfigs(ctaRows);
+  console.log('hero-new: decorate ctaConfigs', ctaConfigs);
 
   updateHeroNewDom(block, blockConfig, ctaConfigs);
+  console.log('hero-new: decorate after updateHeroNewDom', { blockConfig, ctaConfigs });
 }
