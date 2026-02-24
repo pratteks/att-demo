@@ -312,9 +312,33 @@ const buildBlockConfig = (rows) => MODEL_FIELD_ORDER.map((field, index) => ({
   fieldValue: parseFieldValue(rows[index], field.fieldComponent),
 }));
 
+// Purpose: Extract authored instrumentation attributes from an element.
+const getAuthoringAttributes = (element) => {
+  if (!(element instanceof Element)) {
+    return {};
+  }
+
+  return [...element.attributes]
+    .filter((attr) => attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-'))
+    .reduce((attrs, attr) => ({
+      ...attrs,
+      [attr.name]: attr.value,
+    }), {});
+};
+
+// Purpose: Apply authored instrumentation attributes to a rendered element.
+const applyAuthoringAttributes = (element, attributes) => {
+  if (!(element instanceof Element)) {
+    return;
+  }
+
+  Object.entries(attributes || {}).forEach(([name, value]) => {
+    element.setAttribute(name, value);
+  });
+};
+
 // Purpose: Parse a CTA row into the same field object format used by blockConfig.
 const parseCtaRow = (row) => {
-  console.log('row', row.innerHTML);
   const hasDirectCells = row.children.length >= CTA_FIELD_ORDER.length;
   const nestedContainer = row.firstElementChild;
   const hasNestedCells = nestedContainer
@@ -328,10 +352,13 @@ const parseCtaRow = (row) => {
   const ctaFields = CTA_FIELD_ORDER.map((field, index) => ({
     ...field,
     fieldValue: parseFieldValue(cells[index], field.fieldComponent),
+    fieldAuthoringAttributes: getAuthoringAttributes(cells[index]),
   }));
-  console.log(ctaFields, 'ctaFields');
 
-  return ctaFields;
+  return {
+    fields: ctaFields,
+    authoringAttributes: getAuthoringAttributes(row),
+  };
 };
 
 // Purpose: Build repeatable CTA configs from authored rows after model field rows.
@@ -374,6 +401,11 @@ const getListFieldValue = (fieldList, fieldName) => {
   const field = fieldList.find((listField) => listField.fieldName === fieldName);
   return field ? field.fieldValue : '';
 };
+
+// Purpose: Resolve CTA field metadata by name from CTA field objects.
+const getListField = (fieldList, fieldName) => (
+  fieldList.find((listField) => listField.fieldName === fieldName) || null
+);
 
 const FONT_SIZE_LABEL_SUFFIX_MAP = {
   xxxs: 'xxxs',
@@ -541,21 +573,21 @@ const applyBackgroundImage = (heroNew, blockConfig) => {
 
 // Purpose: Build CTA anchor element from parsed CTA field objects.
 const buildCtaLink = (ctaConfig) => {
-  console.log('cta config', ctaConfig);
-  const ctaLabel = String(getListFieldValue(ctaConfig, 'ctaLabel') || '').trim();
-  // if (!ctaLabel) {
-  //   return null;
-  // }
+  const ctaFieldList = ctaConfig?.fields || [];
+  const ctaLabel = String(getListFieldValue(ctaFieldList, 'ctaLabel') || '').trim();
 
-  const displayType = getListFieldValue(ctaConfig, 'displayType');
+  const displayType = getListFieldValue(ctaFieldList, 'displayType');
   const ctaStyle = resolveCtaStyle(displayType);
-  const pageOrMediaLink = resolveReferenceUrl(getListFieldValue(ctaConfig, 'pageOrMediaLink'));
-  const externalLink = resolveReferenceUrl(getListFieldValue(ctaConfig, 'externalLink'));
-  const assetsLinks = resolveReferenceUrl(getListFieldValue(ctaConfig, 'assetsLinks'));
+  const pageOrMediaLink = resolveReferenceUrl(getListFieldValue(ctaFieldList, 'pageOrMediaLink'));
+  const externalLink = resolveReferenceUrl(getListFieldValue(ctaFieldList, 'externalLink'));
+  const assetsLinks = resolveReferenceUrl(getListFieldValue(ctaFieldList, 'assetsLinks'));
   const ctaLink = pageOrMediaLink || externalLink || assetsLinks || '#';
-  const noFollow = Boolean(getListFieldValue(ctaConfig, 'noFollow'));
-  const openNewWindow = Boolean(getListFieldValue(ctaConfig, 'openNewWindow'));
+  const noFollow = Boolean(getListFieldValue(ctaFieldList, 'noFollow'));
+  const openNewWindow = Boolean(getListFieldValue(ctaFieldList, 'openNewWindow'));
   const cta = document.createElement('a');
+  applyAuthoringAttributes(cta, ctaConfig?.authoringAttributes);
+  const ctaLabelField = getListField(ctaFieldList, 'ctaLabel');
+  applyAuthoringAttributes(cta, ctaLabelField?.fieldAuthoringAttributes);
   cta.className = 'hero-new-cta-link';
   cta.classList.add(`hero-new-cta-link-${ctaStyle}`);
   cta.href = ctaLink;
@@ -582,7 +614,6 @@ const buildCtaGroup = (ctaConfigs) => {
   ctaGroup.className = 'hero-new-cta-group';
   ctaConfigs.forEach((ctaConfig) => {
     const cta = buildCtaLink(ctaConfig);
-    console.log('cta created', cta);
     if (cta) {
       ctaGroup.append(cta);
     }
@@ -650,7 +681,6 @@ export default function decorate(block) {
   const rows = [...block.children];
   const modelRows = rows.slice(0, MODEL_FIELD_ORDER.length);
   const ctaRows = rows.slice(MODEL_FIELD_ORDER.length);
-  console.log('cta rows', ctaRows);
   const blockConfig = buildBlockConfig(modelRows);
   const ctaConfigs = buildCtaConfigs(ctaRows);
 
