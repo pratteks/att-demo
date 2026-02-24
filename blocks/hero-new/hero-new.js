@@ -362,40 +362,64 @@ const toCtaFieldList = (fieldValueMap) => CTA_FIELD_ORDER.map((field) => ({
 // Purpose: Parse flat CTA rows (field-per-row) into grouped CTA configs.
 const buildFlatCtaConfigs = (rows) => {
   console.log('hero-new: buildFlatCtaConfigs input rows', rows);
+  console.log('hero-new: buildFlatCtaConfigs row count', rows.length);
   const ctaConfigs = [];
   let currentValues = {};
 
-  const flushCurrentValues = () => {
+  const flushCurrentValues = (reason) => {
+    console.log('hero-new: flushCurrentValues reason', reason);
+    console.log('hero-new: flushCurrentValues currentValues before flush', currentValues);
     const ctaLabel = String(currentValues.ctaLabel || '').trim();
+    console.log('hero-new: flushCurrentValues ctaLabel', ctaLabel);
     if (!ctaLabel) {
+      console.log('hero-new: flushCurrentValues skipped due to empty ctaLabel');
       currentValues = {};
       return;
     }
 
-    ctaConfigs.push(toCtaFieldList(currentValues));
+    const normalizedCtaFields = toCtaFieldList(currentValues);
+    console.log('hero-new: flushCurrentValues normalizedCtaFields', normalizedCtaFields);
+    ctaConfigs.push(normalizedCtaFields);
+    console.log('hero-new: flushCurrentValues ctaConfigs length after push', ctaConfigs.length);
     currentValues = {};
   };
 
-  rows.forEach((row) => {
+  rows.forEach((row, rowIndex) => {
+    console.log('hero-new: buildFlatCtaConfigs inspecting row index', rowIndex);
+    console.log('hero-new: buildFlatCtaConfigs inspecting row value', row);
     const ctaProp = getCtaPropName(row);
+    console.log('hero-new: buildFlatCtaConfigs detected ctaProp', ctaProp);
     if (!ctaProp) {
+      console.log('hero-new: buildFlatCtaConfigs skipping row without CTA prop', rowIndex);
       return;
     }
 
     const fieldMeta = CTA_FIELD_ORDER.find((field) => field.fieldName === ctaProp);
+    console.log('hero-new: buildFlatCtaConfigs fieldMeta', fieldMeta);
     if (!fieldMeta) {
+      console.log('hero-new: buildFlatCtaConfigs missing fieldMeta for ctaProp', ctaProp);
       return;
     }
 
     if (Object.hasOwn(currentValues, ctaProp)) {
-      flushCurrentValues();
+      console.log('hero-new: buildFlatCtaConfigs duplicate ctaProp detected', ctaProp);
+      flushCurrentValues(`duplicate-prop-${ctaProp}`);
     }
 
     const valueNode = row.querySelector(`[data-aue-prop="${ctaProp}"]`) || row;
-    currentValues[ctaProp] = parseFieldValue(valueNode, fieldMeta.fieldComponent);
+    console.log('hero-new: buildFlatCtaConfigs valueNode', valueNode);
+    const parsedValue = parseFieldValue(valueNode, fieldMeta.fieldComponent);
+    console.log('hero-new: buildFlatCtaConfigs parsedValue', {
+      ctaProp,
+      fieldComponent: fieldMeta.fieldComponent,
+      parsedValue,
+    });
+    currentValues[ctaProp] = parsedValue;
+    console.log('hero-new: buildFlatCtaConfigs currentValues after assign', currentValues);
   });
 
-  flushCurrentValues();
+  flushCurrentValues('end-of-loop');
+  console.log('hero-new: buildFlatCtaConfigs ctaConfigs after prop parsing', ctaConfigs);
 
   if (ctaConfigs.length) {
     console.log('hero-new: buildFlatCtaConfigs output ctaConfigs', ctaConfigs);
@@ -403,9 +427,18 @@ const buildFlatCtaConfigs = (rows) => {
   }
 
   const chunkSize = CTA_FIELD_ORDER.length;
+  console.log('hero-new: buildFlatCtaConfigs entering chunk fallback', {
+    chunkSize,
+    rowCount: rows.length,
+  });
   for (let index = 0; index < rows.length; index += chunkSize) {
     const chunkRows = rows.slice(index, index + chunkSize);
+    console.log('hero-new: buildFlatCtaConfigs chunkRows', { index, chunkRows });
     if (chunkRows.length < chunkSize) {
+      console.log('hero-new: buildFlatCtaConfigs skipping short chunk', {
+        index,
+        chunkLength: chunkRows.length,
+      });
       continue;
     }
 
@@ -413,11 +446,14 @@ const buildFlatCtaConfigs = (rows) => {
       ...field,
       fieldValue: parseFieldValue(chunkRows[fieldIndex], field.fieldComponent),
     }));
+    console.log('hero-new: buildFlatCtaConfigs fallback ctaFields', ctaFields);
     const ctaLabelField = ctaFields.find((field) => field.fieldName === 'ctaLabel');
     const hasLabel = String(ctaLabelField?.fieldValue || '').trim();
+    console.log('hero-new: buildFlatCtaConfigs fallback hasLabel', hasLabel);
 
     if (hasLabel) {
       ctaConfigs.push(ctaFields);
+      console.log('hero-new: buildFlatCtaConfigs fallback pushed config', ctaConfigs.length);
     }
   }
   console.log('hero-new: buildFlatCtaConfigs output ctaConfigs', ctaConfigs);
