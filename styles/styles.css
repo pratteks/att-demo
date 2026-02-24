@@ -1110,3 +1110,65 @@ table {
   --main-accent-color: #C2410C; /* darker orange for contrast */
   --link-hover-color: #9A3412;  /* darker hover */
 }
+
+/* Purpose: Viewport breakpoint tokens used for responsive behavior. */
+:root {
+  --viewport-mobile-max: 599px;
+  --viewport-tablet-min: 600px;
+  --viewport-tablet-max: 900px;
+  --viewport-desktop-min: 901px;
+}
+
+/* Purpose: Reusable mobile font-size scale tokens from xxxs to xxl. */
+:root {
+  --font-size-mobile-xxxs: 8px;
+  --font-size-mobile-xxs: 12px;
+  --font-size-mobile-xs: 16px;
+  --font-size-mobile-s: 20px;
+  --font-size-mobile-m: 24px;
+  --font-size-mobile-l: 28px;
+  --font-size-mobile-xl: 32px;
+  --font-size-mobile-xxl: 36px;
+}
+
+/* Purpose: Reusable tablet font-size scale tokens from xxxs to xxl. */
+:root {
+  --font-size-tablet-xxxs: 10px;
+  --font-size-tablet-xxs: 14px;
+  --font-size-tablet-xs: 18px;
+  --font-size-tablet-s: 22px;
+  --font-size-tablet-m: 26px;
+  --font-size-tablet-l: 30px;
+  --font-size-tablet-xl: 34px;
+  --font-size-tablet-xxl: 38px;
+}
+
+/* Purpose: Reusable desktop font-size scale tokens from xxxs to xxl. */
+:root {
+  --font-size-desktop-xxxs: 12px;
+  --font-size-desktop-xxs: 16px;
+  --font-size-desktop-xs: 20px;
+  --font-size-desktop-s: 24px;
+  --font-size-desktop-m: 28px;
+  --font-size-desktop-l: 32px;
+  --font-size-desktop-xl: 36px;
+  --font-size-desktop-xxl: 40px;
+}
+
+/* Purpose: Theme color tokens for hero theme and timer mobile theme selectors. */
+:root {
+  --theme-color-base: var(--text-color, #131313);
+  --theme-color-neutral: #4b5563;
+  --theme-color-accent: var(--main-accent-color, #FB923C);
+  --theme-color-dark-accent: #1e3a8a;
+  --theme-color-light-with-image: #ffffff;
+  --theme-color-dark-with-image: #131313;
+}
+
+/* Purpose: Overlay color tokens for hero overlay color selector values. */
+:root {
+  --overlay-color-cobalt-100: rgba(32, 74, 135, 0.35);
+  --overlay-color-cobalt-400: rgba(23, 58, 112, 0.4);
+  --overlay-color-cobalt-600: rgba(16, 44, 88, 0.45);
+  --overlay-color-cobalt-800: rgba(10, 30, 64, 0.5);
+}
