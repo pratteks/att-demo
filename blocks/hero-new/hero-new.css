@@ -1,68 +1,233 @@
+:root .hero-new {
+  --hero-new-width: 100%;
+  --hero-new-overflow: hidden;
+  --hero-new-display: flex;
+  --hero-new-align-items: center;
+  --hero-new-min-height: 480px;
+  --hero-new-content-width: 720px;
+  --hero-new-padding-mobile: var(--spacing-large);
+  --hero-new-padding-desktop: var(--spacing-xxlarge);
+  --hero-new-gap: var(--spacing-small);
+  --hero-new-eyebrow-size: var(--font-size-mobile-xxs);
+  --hero-new-heading-size: var(--font-size-mobile-xxl);
+  --hero-new-description-size: var(--font-size-mobile-s);
+  --hero-new-legal-size: var(--font-size-mobile-xxxs);
+  --hero-new-line-height-tight: 1.1;
+  --hero-new-line-height-base: 1.5;
+  --hero-new-line-height-legal: 1.4;
+  --hero-new-letter-spacing: 1px;
+  --hero-new-text-transform: uppercase;
+  --hero-new-margin-none: 0;
+  --hero-new-background-position: center;
+  --hero-new-background-size: cover;
+  --hero-new-background-repeat: no-repeat;
+  --hero-new-overlay-color: var(--overlay-color-cobalt-400);
+  --hero-new-text-color: var(--theme-color-base);
+  --hero-new-timer-mobile-theme-color: var(--theme-color-base);
+  --hero-new-content-alignment: flex-start;
+  --hero-new-content-text-align: left;
+  --hero-new-content-justify: center;
+  --hero-new-height-small: 320px;
+  --hero-new-height-medium: 480px;
+  --hero-new-height-large: 640px;
+  --hero-new-custom-size-tablet-fallback: 480px;
+  --hero-new-custom-size-desktop-fallback: 640px;
+  --hero-new-background-image-current:
+    var(--hero-new-background-image-mobile, var(--hero-new-background-image-desktop, none));
+}
+
 .hero-new {
-  --hero-new-text-color: var(--text-color, #1a1a1a);
-  --hero-new-overlay-color: var(--overlay-color, rgba(0, 0, 0, 0.35));
-  --hero-new-content-width: var(--content-width, 720px);
-  --hero-new-padding-mobile: var(--space-24, 24px);
-  --hero-new-padding-desktop: var(--space-48, 48px);
-  --hero-new-gap: var(--space-12, 12px);
-  --hero-new-heading-size: var(--font-size-48, 48px);
-  --hero-new-description-size: var(--font-size-18, 18px);
   position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  min-height: var(--hero-new-height, 480px);
+  overflow: var(--hero-new-overflow);
+  width: var(--hero-new-width);
+  display: var(--hero-new-display);
+  align-items: var(--hero-new-align-items);
+  min-height: var(--hero-new-min-height);
   color: var(--hero-new-text-color);
   background-image:
     linear-gradient(var(--hero-new-overlay-color), var(--hero-new-overlay-color)),
-    var(--hero-new-background-image, none);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
+    var(--hero-new-background-image-current);
+  background-position: var(--hero-new-background-position);
+  background-size: var(--hero-new-background-size);
+  background-repeat: var(--hero-new-background-repeat);
 }
 
 .hero-new-content {
-  width: 100%;
+  width: var(--hero-new-width);
   max-width: var(--hero-new-content-width);
   padding: var(--hero-new-padding-mobile);
-  display: flex;
+  display: var(--hero-new-display);
   flex-direction: column;
   gap: var(--hero-new-gap);
+  align-items: var(--hero-new-content-alignment);
+  justify-content: var(--hero-new-content-justify);
+  text-align: var(--hero-new-content-text-align);
 }
 
 .hero-new-eyebrow {
-  margin: 0;
-  font-size: var(--font-size-14, 14px);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wide, 1px);
+  margin: var(--hero-new-margin-none);
+  font-size: var(--hero-new-eyebrow-size);
+  text-transform: var(--hero-new-text-transform);
+  letter-spacing: var(--hero-new-letter-spacing);
 }
 
 .hero-new-heading {
-  margin: 0;
+  margin: var(--hero-new-margin-none);
   font-size: var(--hero-new-heading-size);
-  line-height: var(--line-height-tight, 1.1);
+  line-height: var(--hero-new-line-height-tight);
 }
 
 .hero-new-description {
-  margin: 0;
+  margin: var(--hero-new-margin-none);
   font-size: var(--hero-new-description-size);
-  line-height: var(--line-height-base, 1.5);
+  line-height: var(--hero-new-line-height-base);
 }
 
 .hero-new-description p {
-  margin: 0;
+  margin: var(--hero-new-margin-none);
 }
 
-.hero-new-theme-dark {
-  --hero-new-text-color: var(--light-color, #ffffff);
+.hero-new-legal {
+  margin: var(--hero-new-margin-none);
+  font-size: var(--hero-new-legal-size);
+  line-height: var(--hero-new-line-height-legal);
 }
 
-.hero-new-theme-light {
-  --hero-new-text-color: var(--dark-color, #1a1a1a);
+.hero-new-legal p {
+  margin: var(--hero-new-margin-none);
+}
+
+.hero-new.themeColor-theme-color-base {
+  --hero-new-text-color: var(--theme-color-base);
+}
+
+.hero-new.themeColor-theme-color-neutral {
+  --hero-new-text-color: var(--theme-color-neutral);
+}
+
+.hero-new.themeColor-theme-color-accent {
+  --hero-new-text-color: var(--theme-color-accent);
+}
+
+.hero-new.themeColor-theme-color-dark-accent {
+  --hero-new-text-color: var(--theme-color-dark-accent);
+}
+
+.hero-new.themeColor-theme-color-light-with-image {
+  --hero-new-text-color: var(--theme-color-light-with-image);
+}
+
+.hero-new.themeColor-theme-color-dark-with-image {
+  --hero-new-text-color: var(--theme-color-dark-with-image);
+}
+
+.hero-new.timerMobileThemeColor-theme-color-base {
+  --hero-new-timer-mobile-theme-color: var(--theme-color-base);
+}
+
+.hero-new.timerMobileThemeColor-theme-color-neutral {
+  --hero-new-timer-mobile-theme-color: var(--theme-color-neutral);
+}
+
+.hero-new.timerMobileThemeColor-theme-color-accent {
+  --hero-new-timer-mobile-theme-color: var(--theme-color-accent);
+}
+
+.hero-new.timerMobileThemeColor-theme-color-dark-accent {
+  --hero-new-timer-mobile-theme-color: var(--theme-color-dark-accent);
+}
+
+.hero-new.timerMobileThemeColor-theme-color-light-with-image {
+  --hero-new-timer-mobile-theme-color: var(--theme-color-light-with-image);
+}
+
+.hero-new.timerMobileThemeColor-theme-color-dark-with-image {
+  --hero-new-timer-mobile-theme-color: var(--theme-color-dark-with-image);
+}
+
+.hero-new.layoutVariation-hero-left-content {
+  --hero-new-content-alignment: flex-start;
+  --hero-new-content-text-align: left;
+  --hero-new-content-justify: center;
+}
+
+.hero-new.layoutVariation-hero-center-content {
+  --hero-new-content-alignment: center;
+  --hero-new-content-text-align: center;
+  --hero-new-content-justify: center;
+}
+
+.hero-new.layoutVariation-hero-center-top-content {
+  --hero-new-content-alignment: center;
+  --hero-new-content-text-align: center;
+  --hero-new-content-justify: flex-start;
+}
+
+.hero-new.heroHeightVariation-small-variation {
+  --hero-new-min-height: var(--hero-new-height-small);
+}
+
+.hero-new.heroHeightVariation-medium-variation {
+  --hero-new-min-height: var(--hero-new-height-medium);
+}
+
+.hero-new.heroHeightVariation-large-variation {
+  --hero-new-min-height: var(--hero-new-height-large);
+}
+
+.hero-new.heroHeightVariation-custom-height {
+  --hero-new-min-height:
+    var(--hero-new-custom-size-tablet, var(--hero-new-custom-size-tablet-fallback));
+}
+
+.hero-new.overlayColor-overlay-color-cobalt-100 {
+  --hero-new-overlay-color: var(--overlay-color-cobalt-100);
+}
+
+.hero-new.overlayColor-overlay-color-cobalt-400 {
+  --hero-new-overlay-color: var(--overlay-color-cobalt-400);
+}
+
+.hero-new.overlayColor-overlay-color-cobalt-600 {
+  --hero-new-overlay-color: var(--overlay-color-cobalt-600);
+}
+
+.hero-new.overlayColor-overlay-color-cobalt-800 {
+  --hero-new-overlay-color: var(--overlay-color-cobalt-800);
+}
+
+@media (width >= 600px) and (width <= 900px) {
+  .hero-new {
+    --hero-new-background-image-current:
+      var(
+        --hero-new-background-image-tablet,
+        var(--hero-new-background-image-desktop, var(--hero-new-background-image-mobile, none))
+      );
+    --hero-new-eyebrow-size: var(--font-size-tablet-xxs);
+    --hero-new-heading-size: var(--font-size-tablet-xxl);
+    --hero-new-description-size: var(--font-size-tablet-s);
+    --hero-new-legal-size: var(--font-size-tablet-xxxs);
+  }
+}
+
+@media (width >= 901px) {
+  .hero-new {
+    --hero-new-background-image-current:
+      var(--hero-new-background-image-desktop, var(--hero-new-background-image-tablet, none));
+    --hero-new-eyebrow-size: var(--font-size-desktop-xxs);
+    --hero-new-heading-size: var(--font-size-desktop-xxl);
+    --hero-new-description-size: var(--font-size-desktop-s);
+    --hero-new-legal-size: var(--font-size-desktop-xxxs);
+  }
 }
 
 @media (width >= 1024px) {
   .hero-new-content {
     padding: var(--hero-new-padding-desktop);
+  }
+
+  .hero-new.heroHeightVariation-custom-height {
+    --hero-new-min-height:
+      var(--hero-new-custom-size-desktop, var(--hero-new-custom-size-desktop-fallback));
   }
 }

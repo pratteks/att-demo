@@ -295,20 +295,8 @@ const resolveReferenceUrl = (referenceRow) => {
 
 // Purpose: Apply styling classes and variables from styling fields.
 const applyStyling = (heroNew, blockConfig) => {
-  const classFieldNames = [
-    'themeColor',
-    'timerMobileThemeColor',
-    'layoutVariation',
-    'heroHeightVariation',
-    'overlayColor',
-  ];
-
   blockConfig.forEach((field) => {
     if (field.fieldType !== 'styling') {
-      return;
-    }
-
-    if (!classFieldNames.includes(field.fieldName)) {
       return;
     }
 
@@ -316,7 +304,7 @@ const applyStyling = (heroNew, blockConfig) => {
       return;
     }
 
-    heroNew.classList.add(field.fieldValue);
+    heroNew.classList.add(`${field.fieldName}-${field.fieldValue}`);
   });
 
   const customSizeTablet = getFieldValue(blockConfig, 'customSizeTablet');
@@ -330,27 +318,41 @@ const applyStyling = (heroNew, blockConfig) => {
   }
 };
 
-// Purpose: Apply background media from authored full-width image reference fields.
-const applyBackgroundImage = (heroNew, blockConfig) => {
-  const backgroundFields = [
-    'desktopFullWidthImageBeginning',
-    'desktopFullWidthImageBackgroundAndEnding',
-    'tabletFullWidthImageBeginning',
-    'tabletFullWidthImageBackgroundAndEnding',
-    'mobileFullWidthImageBeginning',
-    'mobileFullWidthImageBackgroundAndEnding',
-  ];
-
-  const backgroundField = backgroundFields.find(
-    (fieldName) => getFieldValue(blockConfig, fieldName),
+// Purpose: Resolve viewport background URLs with larger viewport fallback inheritance.
+const getResponsiveBackgroundUrls = (blockConfig) => {
+  const desktopUrl = resolveReferenceUrl(
+    getFieldValue(blockConfig, 'desktopFullWidthImageBeginning'),
   );
-  const backgroundReference = getFieldValue(blockConfig, backgroundField);
-  const backgroundUrl = resolveReferenceUrl(backgroundReference);
-  if (!backgroundUrl) {
+  const tabletSource = resolveReferenceUrl(
+    getFieldValue(blockConfig, 'tabletFullWidthImageBeginning'),
+  );
+  const mobileSource = resolveReferenceUrl(
+    getFieldValue(blockConfig, 'mobileFullWidthImageBeginning'),
+  );
+  const tabletUrl = tabletSource || desktopUrl;
+  const mobileUrl = mobileSource || tabletUrl || desktopUrl;
+
+  return { desktopUrl, tabletUrl, mobileUrl };
+};
+
+// Purpose: Apply background media from Beginning image fields with viewport switching.
+const applyBackgroundImage = (heroNew, blockConfig) => {
+  const { desktopUrl, tabletUrl, mobileUrl } = getResponsiveBackgroundUrls(blockConfig);
+  if (!desktopUrl && !tabletUrl && !mobileUrl) {
     return;
   }
 
-  heroNew.style.setProperty('--hero-new-background-image', `url(${backgroundUrl})`);
+  if (desktopUrl) {
+    heroNew.style.setProperty('--hero-new-background-image-desktop', `url(${desktopUrl})`);
+  }
+
+  if (tabletUrl) {
+    heroNew.style.setProperty('--hero-new-background-image-tablet', `url(${tabletUrl})`);
+  }
+
+  if (mobileUrl) {
+    heroNew.style.setProperty('--hero-new-background-image-mobile', `url(${mobileUrl})`);
+  }
 };
 
 // Purpose: Build hero-new content markup from blockConfig field objects.
