@@ -46,7 +46,7 @@
           "component": "container",
           "name": "eyebrowTextVariationControls",
           "label": "Eyebrow Controls",
-          "collapsible": false,
+          "collapsible": true,
           "condition": {
             "===": [
               {
@@ -196,7 +196,7 @@
           "component": "container",
           "name": "headingTextVariationControls",
           "label": "Heading Controls",
-          "collapsible": false,
+          "collapsible": true,
           "condition": {
             "===": [
               {
@@ -358,7 +358,7 @@
           "component": "container",
           "name": "mediaControls",
           "label": "Media Controls",
-          "collapsible": false,
+          "collapsible": true,
           "fields": [
             {
               "component": "reference",
