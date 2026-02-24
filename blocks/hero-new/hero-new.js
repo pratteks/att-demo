@@ -461,42 +461,6 @@ const buildFlatCtaConfigs = (rows) => {
 
   flushCurrentValues('end-of-loop');
   console.log('hero-new: buildFlatCtaConfigs ctaConfigs after prop parsing', ctaConfigs);
-
-  if (ctaConfigs.length) {
-    console.log('hero-new: buildFlatCtaConfigs output ctaConfigs', ctaConfigs);
-    return ctaConfigs;
-  }
-
-  const chunkSize = CTA_FIELD_ORDER.length;
-  console.log('hero-new: buildFlatCtaConfigs entering chunk fallback', {
-    chunkSize,
-    rowCount: rows.length,
-  });
-  for (let index = 0; index < rows.length; index += chunkSize) {
-    const chunkRows = rows.slice(index, index + chunkSize);
-    console.log('hero-new: buildFlatCtaConfigs chunkRows', { index, chunkRows });
-    if (chunkRows.length < chunkSize) {
-      console.log('hero-new: buildFlatCtaConfigs skipping short chunk', {
-        index,
-        chunkLength: chunkRows.length,
-      });
-      continue;
-    }
-
-    const ctaFields = CTA_FIELD_ORDER.map((field, fieldIndex) => ({
-      ...field,
-      fieldValue: parseFieldValue(chunkRows[fieldIndex], field.fieldComponent),
-    }));
-    console.log('hero-new: buildFlatCtaConfigs fallback ctaFields', ctaFields);
-    const ctaLabelField = ctaFields.find((field) => field.fieldName === 'ctaLabel');
-    const hasLabel = String(ctaLabelField?.fieldValue || '').trim();
-    console.log('hero-new: buildFlatCtaConfigs fallback hasLabel', hasLabel);
-
-    if (hasLabel) {
-      ctaConfigs.push(ctaFields);
-      console.log('hero-new: buildFlatCtaConfigs fallback pushed config', ctaConfigs.length);
-    }
-  }
   console.log('hero-new: buildFlatCtaConfigs output ctaConfigs', ctaConfigs);
 
   return ctaConfigs;
