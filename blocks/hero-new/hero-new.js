@@ -270,17 +270,6 @@ const CTA_FIELD_ORDER = [
     fieldComponent: 'select',
   },
 ];
-const CTA_FIELD_NAME_SET = new Set(CTA_FIELD_ORDER.map((field) => field.fieldName));
-const CTA_LABEL_TO_FIELD_NAME = {
-  displaytype: 'displayType',
-  ctalabel: 'ctaLabel',
-  pageormedialink: 'pageOrMediaLink',
-  assetslinks: 'assetsLinks',
-  externallink: 'externalLink',
-  nofollow: 'noFollow',
-  opennewwindow: 'openNewWindow',
-  anchorto: 'anchorTo',
-};
 
 // Purpose: Parse a row value using the configured authored component type.
 const parseFieldValue = (row, fieldComponent) => {
@@ -325,7 +314,6 @@ const buildBlockConfig = (rows) => MODEL_FIELD_ORDER.map((field, index) => ({
 
 // Purpose: Parse a CTA row into the same field object format used by blockConfig.
 const parseCtaRow = (row) => {
-  console.log('hero-new: parseCtaRow input row', row);
   const hasDirectCells = row.children.length >= CTA_FIELD_ORDER.length;
   const nestedContainer = row.firstElementChild;
   const hasNestedCells = nestedContainer
@@ -340,150 +328,14 @@ const parseCtaRow = (row) => {
     ...field,
     fieldValue: parseFieldValue(cells[index], field.fieldComponent),
   }));
-  const ctaLabelField = ctaFields.find((field) => field.fieldName === 'ctaLabel');
-  const hasLabel = String(ctaLabelField?.fieldValue || '').trim();
-  console.log('hero-new: parseCtaRow output', { ctaFields, hasLabel });
 
-  return hasLabel ? ctaFields : null;
-};
-
-// Purpose: Resolve a CTA field prop name from a row or nested authored element.
-const getCtaPropName = (row) => {
-  if (!(row instanceof Element)) {
-    return '';
-  }
-
-  const directProp = row.getAttribute('data-aue-prop');
-  if (CTA_FIELD_NAME_SET.has(directProp)) {
-    return directProp;
-  }
-
-  const propNode = row.querySelector('[data-aue-prop]');
-  const nestedProp = propNode?.getAttribute('data-aue-prop') || '';
-  if (CTA_FIELD_NAME_SET.has(nestedProp)) {
-    return nestedProp;
-  }
-
-  const labelSource = row.children[0]?.textContent || row.firstElementChild?.textContent || '';
-  const normalizedLabel = labelSource
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, '');
-  const inferredField = CTA_LABEL_TO_FIELD_NAME[normalizedLabel] || '';
-  if (inferredField) {
-    console.log('hero-new: getCtaPropName inferred from label', {
-      labelSource,
-      normalizedLabel,
-      inferredField,
-    });
-  }
-
-  return inferredField;
-};
-
-// Purpose: Build normalized CTA field list from a partial field-value map.
-const toCtaFieldList = (fieldValueMap) => CTA_FIELD_ORDER.map((field) => ({
-  ...field,
-  fieldValue: fieldValueMap[field.fieldName] ?? parseFieldValue(null, field.fieldComponent),
-}));
-
-// Purpose: Resolve CTA value node from an authored row for a known CTA field.
-const getCtaValueNode = (row, ctaProp) => {
-  const propNode = row.querySelector(`[data-aue-prop="${ctaProp}"]`);
-  if (propNode) {
-    return propNode;
-  }
-
-  if (row.children.length > 1) {
-    return row.children[1];
-  }
-
-  return row;
-};
-
-// Purpose: Parse flat CTA rows (field-per-row) into grouped CTA configs.
-const buildFlatCtaConfigs = (rows) => {
-  console.log('hero-new: buildFlatCtaConfigs input rows', rows);
-  console.log('hero-new: buildFlatCtaConfigs row count', rows.length);
-  const ctaConfigs = [];
-  let currentValues = {};
-
-  const flushCurrentValues = (reason) => {
-    console.log('hero-new: flushCurrentValues reason', reason);
-    console.log('hero-new: flushCurrentValues currentValues before flush', currentValues);
-    const ctaLabel = String(currentValues.ctaLabel || '').trim();
-    console.log('hero-new: flushCurrentValues ctaLabel', ctaLabel);
-    if (!ctaLabel) {
-      console.log('hero-new: flushCurrentValues skipped due to empty ctaLabel');
-      currentValues = {};
-      return;
-    }
-
-    const normalizedCtaFields = toCtaFieldList(currentValues);
-    console.log('hero-new: flushCurrentValues normalizedCtaFields', normalizedCtaFields);
-    ctaConfigs.push(normalizedCtaFields);
-    console.log('hero-new: flushCurrentValues ctaConfigs length after push', ctaConfigs.length);
-    currentValues = {};
-  };
-
-  rows.forEach((row, rowIndex) => {
-    console.log('hero-new: buildFlatCtaConfigs inspecting row index', rowIndex);
-    console.log('hero-new: buildFlatCtaConfigs inspecting row value', row);
-    const ctaProp = getCtaPropName(row);
-    console.log('hero-new: buildFlatCtaConfigs detected ctaProp', ctaProp);
-    if (!ctaProp) {
-      console.log('hero-new: buildFlatCtaConfigs skipping row without CTA prop', rowIndex);
-      return;
-    }
-
-    const fieldMeta = CTA_FIELD_ORDER.find((field) => field.fieldName === ctaProp);
-    console.log('hero-new: buildFlatCtaConfigs fieldMeta', fieldMeta);
-    if (!fieldMeta) {
-      console.log('hero-new: buildFlatCtaConfigs missing fieldMeta for ctaProp', ctaProp);
-      return;
-    }
-
-    if (Object.hasOwn(currentValues, ctaProp)) {
-      console.log('hero-new: buildFlatCtaConfigs duplicate ctaProp detected', ctaProp);
-      flushCurrentValues(`duplicate-prop-${ctaProp}`);
-    }
-
-    const valueNode = getCtaValueNode(row, ctaProp);
-    console.log('hero-new: buildFlatCtaConfigs valueNode', valueNode);
-    const parsedValue = parseFieldValue(valueNode, fieldMeta.fieldComponent);
-    console.log('hero-new: buildFlatCtaConfigs parsedValue', {
-      ctaProp,
-      fieldComponent: fieldMeta.fieldComponent,
-      parsedValue,
-    });
-    currentValues[ctaProp] = parsedValue;
-    console.log('hero-new: buildFlatCtaConfigs currentValues after assign', currentValues);
-  });
-
-  flushCurrentValues('end-of-loop');
-  console.log('hero-new: buildFlatCtaConfigs ctaConfigs after prop parsing', ctaConfigs);
-  console.log('hero-new: buildFlatCtaConfigs output ctaConfigs', ctaConfigs);
-
-  return ctaConfigs;
+  return ctaFields;
 };
 
 // Purpose: Build repeatable CTA configs from authored rows after model field rows.
-const buildCtaConfigs = (rows) => {
-  console.log('hero-new: buildCtaConfigs input rows', rows);
-  const rowBasedConfigs = rows
-    .map(parseCtaRow)
-    .filter((ctaConfig) => ctaConfig);
-  console.log('hero-new: buildCtaConfigs rowBasedConfigs', rowBasedConfigs);
-
-  if (rowBasedConfigs.length) {
-    console.log('hero-new: buildCtaConfigs returning rowBasedConfigs');
-    return rowBasedConfigs;
-  }
-
-  const flatConfigs = buildFlatCtaConfigs(rows);
-  console.log('hero-new: buildCtaConfigs returning flatConfigs', flatConfigs);
-
-  return flatConfigs;
-};
+const buildCtaConfigs = (rows) => rows
+  .map(parseCtaRow)
+  .filter((ctaConfig) => ctaConfig);
 
 // Purpose: Resolve a field object by name from the blockConfig list.
 const getField = (blockConfig, fieldName) => (
@@ -792,16 +644,11 @@ const updateHeroNewDom = (block, blockConfig, ctaConfigs) => {
 
 export default function decorate(block) {
   const rows = [...block.children];
-  console.log('hero-new: decorate all rows', rows);
   const modelRows = rows.slice(0, MODEL_FIELD_ORDER.length);
   const ctaRows = rows.slice(MODEL_FIELD_ORDER.length);
-  console.log('hero-new: decorate modelRows', modelRows);
-  console.log('hero-new: decorate ctaRows', ctaRows);
+  console.log('cta rows', ctaRows);
   const blockConfig = buildBlockConfig(modelRows);
-  console.log('hero-new: decorate blockConfig', blockConfig);
   const ctaConfigs = buildCtaConfigs(ctaRows);
-  console.log('hero-new: decorate ctaConfigs', ctaConfigs);
 
   updateHeroNewDom(block, blockConfig, ctaConfigs);
-  console.log('hero-new: decorate after updateHeroNewDom', { blockConfig, ctaConfigs });
 }
