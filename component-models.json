@@ -431,6 +431,40 @@
     ]
   },
   {
+    "id": "cta",
+    "fields": [
+      {
+        "component": "text",
+        "name": "ctaLabel",
+        "label": "CTA Label",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "ctaLink",
+        "label": "CTA Link",
+        "valueType": "string",
+        "rootPath": ""
+      },
+      {
+        "component": "select",
+        "name": "ctaStyle",
+        "label": "CTA Style",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "dynamic-media-image",
     "fields": [
       {

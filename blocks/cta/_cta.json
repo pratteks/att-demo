@@ -1,0 +1,56 @@
+{
+  "definitions": [
+    {
+      "title": "CTA",
+      "id": "cta",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "CTA",
+              "model": "cta"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "cta",
+      "fields": [
+        {
+          "component": "text",
+          "name": "ctaLabel",
+          "label": "CTA Label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "ctaLink",
+          "label": "CTA Link",
+          "valueType": "string",
+          "rootPath": ""
+        },
+        {
+          "component": "select",
+          "name": "ctaStyle",
+          "label": "CTA Style",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Primary",
+              "value": "primary"
+            },
+            {
+              "name": "Secondary",
+              "value": "secondary"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

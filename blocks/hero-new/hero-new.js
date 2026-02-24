@@ -222,6 +222,25 @@ const MODEL_FIELD_ORDER = [
   },
 ];
 
+// Purpose: Define repeatable CTA field order for rows authored after hero-new model fields.
+const CTA_FIELD_ORDER = [
+  {
+    fieldName: 'ctaLabel',
+    fieldType: 'content',
+    fieldComponent: 'text',
+  },
+  {
+    fieldName: 'ctaLink',
+    fieldType: 'content',
+    fieldComponent: 'aem-content',
+  },
+  {
+    fieldName: 'ctaStyle',
+    fieldType: 'styling',
+    fieldComponent: 'select',
+  },
+];
+
 // Purpose: Parse a row value using the configured authored component type.
 const parseFieldValue = (row, fieldComponent) => {
   if (!row) {
@@ -263,6 +282,23 @@ const buildBlockConfig = (rows) => MODEL_FIELD_ORDER.map((field, index) => ({
   fieldValue: parseFieldValue(rows[index], field.fieldComponent),
 }));
 
+// Purpose: Parse a CTA row into the same field object format used by blockConfig.
+const parseCtaRow = (row) => {
+  const cells = [...row.children];
+  const ctaFields = CTA_FIELD_ORDER.map((field, index) => ({
+    ...field,
+    fieldValue: parseFieldValue(cells[index], field.fieldComponent),
+  }));
+  const hasLabel = String(ctaFields[0]?.fieldValue || '').trim();
+
+  return hasLabel ? ctaFields : null;
+};
+
+// Purpose: Build repeatable CTA configs from authored rows after model field rows.
+const buildCtaConfigs = (rows) => rows
+  .map(parseCtaRow)
+  .filter((ctaConfig) => ctaConfig);
+
 // Purpose: Resolve a field object by name from the blockConfig list.
 const getField = (blockConfig, fieldName) => (
   blockConfig.find((field) => field.fieldName === fieldName) || null
@@ -291,6 +327,12 @@ const resolveReferenceUrl = (referenceRow) => {
   }
 
   return referenceRow.textContent?.trim() || '';
+};
+
+// Purpose: Resolve field value by name from a field object list.
+const getListFieldValue = (fieldList, fieldName) => {
+  const field = fieldList.find((listField) => listField.fieldName === fieldName);
+  return field ? field.fieldValue : '';
 };
 
 // Purpose: Apply styling classes and variables from styling fields.
@@ -355,8 +397,44 @@ const applyBackgroundImage = (heroNew, blockConfig) => {
   }
 };
 
+// Purpose: Build CTA anchor element from parsed CTA field objects.
+const buildCtaLink = (ctaConfig) => {
+  const ctaLabel = String(getListFieldValue(ctaConfig, 'ctaLabel') || '').trim();
+  if (!ctaLabel) {
+    return null;
+  }
+
+  const ctaStyle = String(getListFieldValue(ctaConfig, 'ctaStyle') || '').trim() || 'primary';
+  const ctaLink = resolveReferenceUrl(getListFieldValue(ctaConfig, 'ctaLink')) || '#';
+  const cta = document.createElement('a');
+  cta.className = 'hero-new-cta-link';
+  cta.classList.add(`hero-new-cta-link-${ctaStyle}`);
+  cta.href = ctaLink;
+  cta.textContent = ctaLabel;
+
+  return cta;
+};
+
+// Purpose: Build repeatable CTA group and place it below legal text.
+const buildCtaGroup = (ctaConfigs) => {
+  if (!ctaConfigs.length) {
+    return null;
+  }
+
+  const ctaGroup = document.createElement('div');
+  ctaGroup.className = 'hero-new-cta-group';
+  ctaConfigs.forEach((ctaConfig) => {
+    const cta = buildCtaLink(ctaConfig);
+    if (cta) {
+      ctaGroup.append(cta);
+    }
+  });
+
+  return ctaGroup.childElementCount ? ctaGroup : null;
+};
+
 // Purpose: Build hero-new content markup from blockConfig field objects.
-const buildHeroNewContent = (blockConfig) => {
+const buildHeroNewContent = (blockConfig, ctaConfigs) => {
   const heroNew = document.createElement('div');
   heroNew.className = 'hero-new';
 
@@ -394,20 +472,28 @@ const buildHeroNewContent = (blockConfig) => {
     content.append(legal);
   }
 
+  const ctaGroup = buildCtaGroup(ctaConfigs);
+  if (ctaGroup) {
+    content.append(ctaGroup);
+  }
+
   heroNew.append(content);
   return heroNew;
 };
 
 // Purpose: Apply a single DOM update pass from parsed blockConfig.
-const updateHeroNewDom = (block, blockConfig) => {
+const updateHeroNewDom = (block, blockConfig, ctaConfigs) => {
   block.innerHTML = '';
-  block.append(buildHeroNewContent(blockConfig));
+  block.append(buildHeroNewContent(blockConfig, ctaConfigs));
 };
 
 export default function decorate(block) {
   const rows = [...block.children];
-  const blockConfig = buildBlockConfig(rows);
-  console.log('hero-new block config', blockConfig);
+  const modelRows = rows.slice(0, MODEL_FIELD_ORDER.length);
+  const ctaRows = rows.slice(MODEL_FIELD_ORDER.length);
+  const blockConfig = buildBlockConfig(modelRows);
+  const ctaConfigs = buildCtaConfigs(ctaRows);
+  console.log('hero-new block config', { fields: blockConfig, ctas: ctaConfigs });
 
-  updateHeroNewDom(block, blockConfig);
+  updateHeroNewDom(block, blockConfig, ctaConfigs);
 }

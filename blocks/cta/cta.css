@@ -1,0 +1,43 @@
+:root .cta {
+  --cta-gap: var(--spacing-small);
+  --cta-display: flex;
+  --cta-flex-wrap: wrap;
+  --cta-align-items: center;
+  --cta-primary-background: var(--main-accent-color);
+  --cta-primary-color: var(--text-light);
+  --cta-secondary-background: transparent;
+  --cta-secondary-color: var(--main-accent-color);
+  --cta-secondary-border-color: var(--main-accent-color);
+  --cta-border-width: 2px;
+  --cta-border-style: solid;
+  --cta-border-radius: var(--border-radius-base);
+  --cta-padding-block: var(--spacing-small);
+  --cta-padding-inline: var(--spacing-medium);
+  --cta-text-decoration: none;
+}
+
+.cta {
+  display: var(--cta-display);
+  flex-wrap: var(--cta-flex-wrap);
+  gap: var(--cta-gap);
+  align-items: var(--cta-align-items);
+}
+
+.cta .cta-button {
+  border-radius: var(--cta-border-radius);
+  padding: var(--cta-padding-block) var(--cta-padding-inline);
+  text-decoration: var(--cta-text-decoration);
+}
+
+.cta .cta-button-primary {
+  background-color: var(--cta-primary-background);
+  color: var(--cta-primary-color);
+}
+
+.cta .cta-button-secondary {
+  background-color: var(--cta-secondary-background);
+  color: var(--cta-secondary-color);
+  border-color: var(--cta-secondary-border-color);
+  border-style: var(--cta-border-style);
+  border-width: var(--cta-border-width);
+}
