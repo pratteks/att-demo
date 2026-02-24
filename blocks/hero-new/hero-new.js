@@ -315,22 +315,23 @@ const buildBlockConfig = (rows) => MODEL_FIELD_ORDER.map((field, index) => ({
 // Purpose: Parse a CTA row into the same field object format used by blockConfig.
 const parseCtaRow = (row) => {
   console.log('row', row.innerHTML);
-  // const hasDirectCells = row.children.length >= CTA_FIELD_ORDER.length;
-  // const nestedContainer = row.firstElementChild;
-  // const hasNestedCells = nestedContainer
-  //   && nestedContainer.children
-  //   && nestedContainer.children.length >= CTA_FIELD_ORDER.length;
-  // const cells = hasDirectCells
-  //   ? [...row.children]
-  //   : hasNestedCells
-  //     ? [...nestedContainer.children]
-  //     : [];
-  // const ctaFields = CTA_FIELD_ORDER.map((field, index) => ({
-  //   ...field,
-  //   fieldValue: parseFieldValue(cells[index], field.fieldComponent),
-  // }));
+  const hasDirectCells = row.children.length >= CTA_FIELD_ORDER.length;
+  const nestedContainer = row.firstElementChild;
+  const hasNestedCells = nestedContainer
+    && nestedContainer.children
+    && nestedContainer.children.length >= CTA_FIELD_ORDER.length;
+  const cells = hasDirectCells
+    ? [...row.children]
+    : hasNestedCells
+      ? [...nestedContainer.children]
+      : [];
+  const ctaFields = CTA_FIELD_ORDER.map((field, index) => ({
+    ...field,
+    fieldValue: parseFieldValue(cells[index], field.fieldComponent),
+  }));
+  console.log(ctaFields, 'ctaFields');
 
-  return row;
+  return ctaFields;
 };
 
 // Purpose: Build repeatable CTA configs from authored rows after model field rows.
@@ -540,6 +541,7 @@ const applyBackgroundImage = (heroNew, blockConfig) => {
 
 // Purpose: Build CTA anchor element from parsed CTA field objects.
 const buildCtaLink = (ctaConfig) => {
+  console.log('cta config', ctaConfig);
   const ctaLabel = String(getListFieldValue(ctaConfig, 'ctaLabel') || '').trim();
   if (!ctaLabel) {
     return null;
