@@ -56,6 +56,11 @@ const MODEL_FIELD_ORDER = [
     fieldComponent: 'rte',
   },
   {
+    fieldName: 'ctaLayout',
+    fieldType: 'content',
+    fieldComponent: 'select',
+  },
+  {
     fieldName: 'desktopFullWidthImageBeginning',
     fieldType: 'content',
     fieldComponent: 'reference',
@@ -361,41 +366,64 @@ const getListFieldValue = (fieldList, fieldName) => {
   return field ? field.fieldValue : '';
 };
 
-// Purpose: Resolve selected font token into a CSS variable reference value.
-const getFontSizeValue = (selectedToken) => {
+const FONT_SIZE_LABEL_SUFFIX_MAP = {
+  xxxs: 'xxxs',
+  xxs: 'xxs',
+  xs: 'xs',
+  s: 's',
+  m: 'm',
+  l: 'l',
+  xl: 'xl',
+  xxl: 'xxl',
+};
+
+// Purpose: Resolve selected font token/label into a CSS variable reference value.
+const getFontSizeValue = (selectedToken, viewport) => {
   const token = String(selectedToken || '').trim();
-  if (!token || token === 'inherit') {
+  if (!token || token.toLowerCase() === 'inherit') {
     return '';
   }
 
-  return `var(--${token})`;
+  if (token.startsWith('font-size-')) {
+    return `var(--${token})`;
+  }
+
+  const normalizedLabel = token.toLowerCase();
+  const suffix = FONT_SIZE_LABEL_SUFFIX_MAP[normalizedLabel];
+  if (!suffix) {
+    return '';
+  }
+
+  return `var(--font-size-${viewport}-${suffix})`;
 };
 
 // Purpose: Apply authored eyebrow and heading size selections across breakpoints.
 const applyTypographySizing = (heroNew, blockConfig) => {
   const eyebrowDesktop = getFontSizeValue(
     getFieldValue(blockConfig, 'eyebrowDesktopFontSizeToken'),
+    'desktop',
   );
   const eyebrowTabletSelected = getFieldValue(blockConfig, 'eyebrowTabletFontSizeToken');
   const eyebrowMobileSelected = getFieldValue(blockConfig, 'eyebrowMobileFontSizeToken');
   const eyebrowTablet = eyebrowTabletSelected === 'inherit'
     ? eyebrowDesktop
-    : getFontSizeValue(eyebrowTabletSelected);
+    : getFontSizeValue(eyebrowTabletSelected, 'tablet');
   const eyebrowMobile = eyebrowMobileSelected === 'inherit'
     ? (eyebrowTablet || eyebrowDesktop)
-    : getFontSizeValue(eyebrowMobileSelected);
+    : getFontSizeValue(eyebrowMobileSelected, 'mobile');
 
   const headingDesktop = getFontSizeValue(
     getFieldValue(blockConfig, 'headingDesktopFontSizeToken'),
+    'desktop',
   );
   const headingTabletSelected = getFieldValue(blockConfig, 'headingTabletFontSizeToken');
   const headingMobileSelected = getFieldValue(blockConfig, 'headingMobileFontSizeToken');
   const headingTablet = headingTabletSelected === 'inherit'
     ? headingDesktop
-    : getFontSizeValue(headingTabletSelected);
+    : getFontSizeValue(headingTabletSelected, 'tablet');
   const headingMobile = headingMobileSelected === 'inherit'
     ? (headingTablet || headingDesktop)
-    : getFontSizeValue(headingMobileSelected);
+    : getFontSizeValue(headingMobileSelected, 'mobile');
 
   if (eyebrowDesktop) {
     heroNew.style.setProperty('--hero-new-eyebrow-size-desktop', eyebrowDesktop);
@@ -605,7 +633,6 @@ export default function decorate(block) {
   const ctaRows = rows.slice(MODEL_FIELD_ORDER.length);
   const blockConfig = buildBlockConfig(modelRows);
   const ctaConfigs = buildCtaConfigs(ctaRows);
-  console.log('hero-new block config', { fields: blockConfig, ctas: ctaConfigs });
 
   updateHeroNewDom(block, blockConfig, ctaConfigs);
 }
