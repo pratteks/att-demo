@@ -271,6 +271,16 @@ const CTA_FIELD_ORDER = [
   },
 ];
 const CTA_FIELD_NAME_SET = new Set(CTA_FIELD_ORDER.map((field) => field.fieldName));
+const CTA_LABEL_TO_FIELD_NAME = {
+  displaytype: 'displayType',
+  ctalabel: 'ctaLabel',
+  pageormedialink: 'pageOrMediaLink',
+  assetslinks: 'assetsLinks',
+  externallink: 'externalLink',
+  nofollow: 'noFollow',
+  opennewwindow: 'openNewWindow',
+  anchorto: 'anchorTo',
+};
 
 // Purpose: Parse a row value using the configured authored component type.
 const parseFieldValue = (row, fieldComponent) => {
@@ -350,7 +360,24 @@ const getCtaPropName = (row) => {
 
   const propNode = row.querySelector('[data-aue-prop]');
   const nestedProp = propNode?.getAttribute('data-aue-prop') || '';
-  return CTA_FIELD_NAME_SET.has(nestedProp) ? nestedProp : '';
+  if (CTA_FIELD_NAME_SET.has(nestedProp)) {
+    return nestedProp;
+  }
+
+  const labelSource = row.children[0]?.textContent || row.firstElementChild?.textContent || '';
+  const normalizedLabel = labelSource
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '');
+  const inferredField = CTA_LABEL_TO_FIELD_NAME[normalizedLabel] || '';
+  if (inferredField) {
+    console.log('hero-new: getCtaPropName inferred from label', {
+      labelSource,
+      normalizedLabel,
+      inferredField,
+    });
+  }
+
+  return inferredField;
 };
 
 // Purpose: Build normalized CTA field list from a partial field-value map.
@@ -358,6 +385,20 @@ const toCtaFieldList = (fieldValueMap) => CTA_FIELD_ORDER.map((field) => ({
   ...field,
   fieldValue: fieldValueMap[field.fieldName] ?? parseFieldValue(null, field.fieldComponent),
 }));
+
+// Purpose: Resolve CTA value node from an authored row for a known CTA field.
+const getCtaValueNode = (row, ctaProp) => {
+  const propNode = row.querySelector(`[data-aue-prop="${ctaProp}"]`);
+  if (propNode) {
+    return propNode;
+  }
+
+  if (row.children.length > 1) {
+    return row.children[1];
+  }
+
+  return row;
+};
 
 // Purpose: Parse flat CTA rows (field-per-row) into grouped CTA configs.
 const buildFlatCtaConfigs = (rows) => {
@@ -406,7 +447,7 @@ const buildFlatCtaConfigs = (rows) => {
       flushCurrentValues(`duplicate-prop-${ctaProp}`);
     }
 
-    const valueNode = row.querySelector(`[data-aue-prop="${ctaProp}"]`) || row;
+    const valueNode = getCtaValueNode(row, ctaProp);
     console.log('hero-new: buildFlatCtaConfigs valueNode', valueNode);
     const parsedValue = parseFieldValue(valueNode, fieldMeta.fieldComponent);
     console.log('hero-new: buildFlatCtaConfigs parsedValue', {
