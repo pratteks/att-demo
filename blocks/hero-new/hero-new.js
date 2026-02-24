@@ -270,6 +270,7 @@ const CTA_FIELD_ORDER = [
     fieldComponent: 'select',
   },
 ];
+const CTA_FIELD_NAME_SET = new Set(CTA_FIELD_ORDER.map((field) => field.fieldName));
 
 // Purpose: Parse a row value using the configured authored component type.
 const parseFieldValue = (row, fieldComponent) => {
@@ -336,12 +337,72 @@ const parseCtaRow = (row) => {
   return hasLabel ? ctaFields : null;
 };
 
+// Purpose: Resolve a CTA field prop name from a row or nested authored element.
+const getCtaPropName = (row) => {
+  if (!(row instanceof Element)) {
+    return '';
+  }
+
+  const directProp = row.getAttribute('data-aue-prop');
+  if (CTA_FIELD_NAME_SET.has(directProp)) {
+    return directProp;
+  }
+
+  const propNode = row.querySelector('[data-aue-prop]');
+  const nestedProp = propNode?.getAttribute('data-aue-prop') || '';
+  return CTA_FIELD_NAME_SET.has(nestedProp) ? nestedProp : '';
+};
+
+// Purpose: Build normalized CTA field list from a partial field-value map.
+const toCtaFieldList = (fieldValueMap) => CTA_FIELD_ORDER.map((field) => ({
+  ...field,
+  fieldValue: fieldValueMap[field.fieldName] ?? parseFieldValue(null, field.fieldComponent),
+}));
+
 // Purpose: Parse flat CTA rows (field-per-row) into grouped CTA configs.
 const buildFlatCtaConfigs = (rows) => {
   console.log('hero-new: buildFlatCtaConfigs input rows', rows);
-  const chunkSize = CTA_FIELD_ORDER.length;
   const ctaConfigs = [];
+  let currentValues = {};
 
+  const flushCurrentValues = () => {
+    const ctaLabel = String(currentValues.ctaLabel || '').trim();
+    if (!ctaLabel) {
+      currentValues = {};
+      return;
+    }
+
+    ctaConfigs.push(toCtaFieldList(currentValues));
+    currentValues = {};
+  };
+
+  rows.forEach((row) => {
+    const ctaProp = getCtaPropName(row);
+    if (!ctaProp) {
+      return;
+    }
+
+    const fieldMeta = CTA_FIELD_ORDER.find((field) => field.fieldName === ctaProp);
+    if (!fieldMeta) {
+      return;
+    }
+
+    if (Object.hasOwn(currentValues, ctaProp)) {
+      flushCurrentValues();
+    }
+
+    const valueNode = row.querySelector(`[data-aue-prop="${ctaProp}"]`) || row;
+    currentValues[ctaProp] = parseFieldValue(valueNode, fieldMeta.fieldComponent);
+  });
+
+  flushCurrentValues();
+
+  if (ctaConfigs.length) {
+    console.log('hero-new: buildFlatCtaConfigs output ctaConfigs', ctaConfigs);
+    return ctaConfigs;
+  }
+
+  const chunkSize = CTA_FIELD_ORDER.length;
   for (let index = 0; index < rows.length; index += chunkSize) {
     const chunkRows = rows.slice(index, index + chunkSize);
     if (chunkRows.length < chunkSize) {
