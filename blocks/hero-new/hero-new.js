@@ -501,24 +501,21 @@ const applyTypographySizing = (heroNew, blockConfig) => {
 
 // Purpose: Resolve CTA style token from display type selection.
 const resolveCtaStyle = (displayTypeValue) => {
-  const normalized = String(displayTypeValue || '').trim().toLowerCase();
-  if (normalized.includes('tertiary')) {
-    return 'tertiary';
-  }
+  const normalized = String(displayTypeValue || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[_\s]+/g, '-');
+  const styleByValue = {
+    primary: 'primary',
+    secondary: 'secondary',
+    tertiary: 'tertiary',
+    'text-link': 'text',
+    text: 'text',
+    link: 'text',
+    dark: 'dark',
+  };
 
-  if (normalized.includes('text') || normalized.includes('link')) {
-    return 'text';
-  }
-
-  if (normalized.includes('dark')) {
-    return 'dark';
-  }
-
-  if (normalized.includes('secondary')) {
-    return 'secondary';
-  }
-
-  return 'primary';
+  return styleByValue[normalized] || 'primary';
 };
 
 // Purpose: Resolve CTA group layout token from CTA layout selection.

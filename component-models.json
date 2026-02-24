@@ -6520,7 +6520,28 @@
         "name": "displayType",
         "label": "Display Type",
         "valueType": "string",
-        "options": []
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          },
+          {
+            "name": "Tertiary",
+            "value": "tertiary"
+          },
+          {
+            "name": "Text Link",
+            "value": "text-link"
+          },
+          {
+            "name": "Dark",
+            "value": "dark"
+          }
+        ]
       },
       {
         "component": "text",

@@ -65,9 +65,9 @@
   --hero-new-cta-text-background: transparent;
   --hero-new-cta-text-color: var(--hero-new-cta-theme-color);
   --hero-new-cta-text-border-color: var(--hero-new-cta-theme-color);
-  --hero-new-cta-dark-background: var(--theme-color-dark-with-image);
-  --hero-new-cta-dark-color: var(--theme-color-light-with-image);
-  --hero-new-cta-dark-border-color: var(--theme-color-dark-with-image);
+  --hero-new-cta-dark-background: var(--hero-new-cta-theme-color);
+  --hero-new-cta-dark-color: var(--hero-new-cta-on-theme-color);
+  --hero-new-cta-dark-border-color: var(--hero-new-cta-theme-color);
   --hero-new-cta-layout-direction: row;
   --hero-new-cta-layout-align-items: center;
   --hero-new-background-image-current:
