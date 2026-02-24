@@ -58,5 +58,11 @@
       "title",
       "video"
     ]
+  },
+  {
+    "id": "hero-new",
+    "components": [
+      "cta"
+    ]
   }
 ]

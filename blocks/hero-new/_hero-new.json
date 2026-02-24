@@ -355,6 +355,22 @@
           "valueType": "string"
         },
         {
+          "component": "select",
+          "name": "ctaLayout",
+          "label": "CTA Layout",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Stacked",
+              "value": "stacked"
+            },
+            {
+              "name": "Row",
+              "value": "row"
+            }
+          ]
+        },
+        {
           "component": "container",
           "name": "mediaControls",
           "label": "Media Controls",

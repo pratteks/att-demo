@@ -225,18 +225,43 @@ const MODEL_FIELD_ORDER = [
 // Purpose: Define repeatable CTA field order for rows authored after hero-new model fields.
 const CTA_FIELD_ORDER = [
   {
+    fieldName: 'displayType',
+    fieldType: 'content',
+    fieldComponent: 'select',
+  },
+  {
     fieldName: 'ctaLabel',
     fieldType: 'content',
     fieldComponent: 'text',
   },
   {
-    fieldName: 'ctaLink',
+    fieldName: 'pageOrMediaLink',
     fieldType: 'content',
     fieldComponent: 'aem-content',
   },
   {
-    fieldName: 'ctaStyle',
-    fieldType: 'styling',
+    fieldName: 'assetsLinks',
+    fieldType: 'content',
+    fieldComponent: 'aem-content',
+  },
+  {
+    fieldName: 'externalLink',
+    fieldType: 'content',
+    fieldComponent: 'aem-content',
+  },
+  {
+    fieldName: 'noFollow',
+    fieldType: 'content',
+    fieldComponent: 'boolean',
+  },
+  {
+    fieldName: 'openNewWindow',
+    fieldType: 'content',
+    fieldComponent: 'boolean',
+  },
+  {
+    fieldName: 'anchorTo',
+    fieldType: 'content',
     fieldComponent: 'select',
   },
 ];
@@ -335,6 +360,16 @@ const getListFieldValue = (fieldList, fieldName) => {
   return field ? field.fieldValue : '';
 };
 
+// Purpose: Resolve CTA style token from display type selection.
+const resolveCtaStyle = (displayTypeValue) => {
+  const normalized = String(displayTypeValue || '').trim().toLowerCase();
+  if (normalized.includes('secondary')) {
+    return 'secondary';
+  }
+
+  return 'primary';
+};
+
 // Purpose: Apply styling classes and variables from styling fields.
 const applyStyling = (heroNew, blockConfig) => {
   blockConfig.forEach((field) => {
@@ -404,13 +439,27 @@ const buildCtaLink = (ctaConfig) => {
     return null;
   }
 
-  const ctaStyle = String(getListFieldValue(ctaConfig, 'ctaStyle') || '').trim() || 'primary';
-  const ctaLink = resolveReferenceUrl(getListFieldValue(ctaConfig, 'ctaLink')) || '#';
+  const displayType = getListFieldValue(ctaConfig, 'displayType');
+  const ctaStyle = resolveCtaStyle(displayType);
+  const pageOrMediaLink = resolveReferenceUrl(getListFieldValue(ctaConfig, 'pageOrMediaLink'));
+  const externalLink = resolveReferenceUrl(getListFieldValue(ctaConfig, 'externalLink'));
+  const assetsLinks = resolveReferenceUrl(getListFieldValue(ctaConfig, 'assetsLinks'));
+  const ctaLink = pageOrMediaLink || externalLink || assetsLinks || '#';
+  const noFollow = Boolean(getListFieldValue(ctaConfig, 'noFollow'));
+  const openNewWindow = Boolean(getListFieldValue(ctaConfig, 'openNewWindow'));
   const cta = document.createElement('a');
   cta.className = 'hero-new-cta-link';
   cta.classList.add(`hero-new-cta-link-${ctaStyle}`);
   cta.href = ctaLink;
   cta.textContent = ctaLabel;
+  if (noFollow) {
+    cta.rel = 'nofollow';
+  }
+
+  if (openNewWindow) {
+    cta.target = '_blank';
+    cta.rel = cta.rel ? `${cta.rel} noopener noreferrer` : 'noopener noreferrer';
+  }
 
   return cta;
 };
