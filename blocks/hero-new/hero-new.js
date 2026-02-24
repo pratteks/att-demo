@@ -543,9 +543,9 @@ const applyBackgroundImage = (heroNew, blockConfig) => {
 const buildCtaLink = (ctaConfig) => {
   console.log('cta config', ctaConfig);
   const ctaLabel = String(getListFieldValue(ctaConfig, 'ctaLabel') || '').trim();
-  if (!ctaLabel) {
-    return null;
-  }
+  // if (!ctaLabel) {
+  //   return null;
+  // }
 
   const displayType = getListFieldValue(ctaConfig, 'displayType');
   const ctaStyle = resolveCtaStyle(displayType);
