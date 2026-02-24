@@ -15,6 +15,21 @@
           }
         }
       }
+    },
+    {
+      "title": "CTA",
+      "id": "cta",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "CTA",
+              "model": "cta"
+            }
+          }
+        }
+      }
     }
   ],
   "models": [
@@ -788,6 +803,74 @@
           "name": "mobileSmallImage",
           "label": "Mobile Small Image",
           "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "cta",
+      "fields": [
+        {
+          "component": "select",
+          "name": "displayType",
+          "label": "Display Type",
+          "valueType": "string",
+          "options": []
+        },
+        {
+          "component": "text",
+          "name": "ctaLabel",
+          "label": "CTA Label",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "pageOrMediaLink",
+          "label": "Page or Media Link",
+          "valueType": "string",
+          "rootPath": ""
+        },
+        {
+          "component": "aem-content",
+          "name": "assetsLinks",
+          "label": "Assets Links",
+          "valueType": "string",
+          "rootPath": "",
+          "multi": true
+        },
+        {
+          "component": "aem-content",
+          "name": "externalLink",
+          "label": "External Link",
+          "valueType": "string",
+          "rootPath": ""
+        },
+        {
+          "component": "boolean",
+          "name": "noFollow",
+          "label": "No Follow",
+          "valueType": "boolean"
+        },
+        {
+          "component": "boolean",
+          "name": "openNewWindow",
+          "label": "Open New Window",
+          "valueType": "boolean"
+        },
+        {
+          "component": "select",
+          "name": "anchorTo",
+          "label": "Anchor To",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Option 1",
+              "value": "option-1"
+            },
+            {
+              "name": "Option 2",
+              "value": "option-2"
+            }
+          ]
         }
       ]
     }

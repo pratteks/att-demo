@@ -201,21 +201,6 @@
           }
         },
         {
-          "title": "CTA",
-          "id": "cta",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "CTA",
-                  "model": "cta"
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Dynamic Media(Image)",
           "id": "dynamic-media-image",
           "plugins": {
@@ -836,6 +821,21 @@
                   "name": "Hero New",
                   "model": "hero-new",
                   "filter": "hero-new"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "CTA",
+          "id": "cta",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "CTA",
+                  "model": "cta"
                 }
               }
             }

@@ -12,8 +12,14 @@
   --hero-new-padding-mobile: var(--spacing-large);
   --hero-new-padding-desktop: var(--spacing-xxlarge);
   --hero-new-gap: var(--spacing-small);
-  --hero-new-eyebrow-size: var(--font-size-mobile-xxs);
-  --hero-new-heading-size: var(--font-size-mobile-xxl);
+  --hero-new-eyebrow-size-mobile: var(--font-size-mobile-xxs);
+  --hero-new-eyebrow-size-tablet: var(--font-size-tablet-xxs);
+  --hero-new-eyebrow-size-desktop: var(--font-size-desktop-xxs);
+  --hero-new-heading-size-mobile: var(--font-size-mobile-xxl);
+  --hero-new-heading-size-tablet: var(--font-size-tablet-xxl);
+  --hero-new-heading-size-desktop: var(--font-size-desktop-xxl);
+  --hero-new-eyebrow-size: var(--hero-new-eyebrow-size-mobile);
+  --hero-new-heading-size: var(--hero-new-heading-size-mobile);
   --hero-new-description-size: var(--font-size-mobile-s);
   --hero-new-legal-size: var(--font-size-mobile-xxxs);
   --hero-new-line-height-tight: 1.1;
@@ -133,14 +139,7 @@
   gap: var(--hero-new-cta-gap);
 }
 
-.hero-new-cta-group .cta {
-  display: var(--hero-new-display);
-  flex-direction: var(--hero-new-flex-direction-row);
-  flex-wrap: var(--hero-new-flex-wrap);
-  gap: var(--hero-new-cta-gap);
-}
-
-.hero-new-cta-group .cta-button {
+.hero-new-cta-link {
   border-radius: var(--hero-new-cta-border-radius);
   padding: var(--hero-new-cta-padding-block) var(--hero-new-cta-padding-inline);
   text-decoration: var(--hero-new-cta-text-decoration);
@@ -148,13 +147,13 @@
   border-width: var(--hero-new-cta-border-width);
 }
 
-.hero-new-cta-group .cta-button-primary {
+.hero-new-cta-link-primary {
   background-color: var(--hero-new-cta-primary-background);
   color: var(--hero-new-cta-primary-color);
   border-color: var(--hero-new-cta-primary-background);
 }
 
-.hero-new-cta-group .cta-button-secondary {
+.hero-new-cta-link-secondary {
   background-color: var(--hero-new-cta-secondary-background);
   color: var(--hero-new-cta-secondary-color);
   border-color: var(--hero-new-cta-secondary-border-color);
@@ -266,8 +265,8 @@
         --hero-new-background-image-tablet,
         var(--hero-new-background-image-desktop, var(--hero-new-background-image-mobile, none))
       );
-    --hero-new-eyebrow-size: var(--font-size-tablet-xxs);
-    --hero-new-heading-size: var(--font-size-tablet-xxl);
+    --hero-new-eyebrow-size: var(--hero-new-eyebrow-size-tablet);
+    --hero-new-heading-size: var(--hero-new-heading-size-tablet);
     --hero-new-description-size: var(--font-size-tablet-s);
     --hero-new-legal-size: var(--font-size-tablet-xxxs);
   }
@@ -277,8 +276,8 @@
   .hero-new {
     --hero-new-background-image-current:
       var(--hero-new-background-image-desktop, var(--hero-new-background-image-tablet, none));
-    --hero-new-eyebrow-size: var(--font-size-desktop-xxs);
-    --hero-new-heading-size: var(--font-size-desktop-xxl);
+    --hero-new-eyebrow-size: var(--hero-new-eyebrow-size-desktop);
+    --hero-new-heading-size: var(--hero-new-heading-size-desktop);
     --hero-new-description-size: var(--font-size-desktop-s);
     --hero-new-legal-size: var(--font-size-desktop-xxxs);
   }

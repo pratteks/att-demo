@@ -1,5 +1,3 @@
-import { decorateBlock, loadBlock } from '../../scripts/aem.js';
-
 // Purpose: Define all model fields in authored row order with type and component metadata.
 const MODEL_FIELD_ORDER = [
   {
@@ -363,6 +361,77 @@ const getListFieldValue = (fieldList, fieldName) => {
   return field ? field.fieldValue : '';
 };
 
+// Purpose: Resolve selected font token into a CSS variable reference value.
+const getFontSizeValue = (selectedToken) => {
+  const token = String(selectedToken || '').trim();
+  if (!token || token === 'inherit') {
+    return '';
+  }
+
+  return `var(--${token})`;
+};
+
+// Purpose: Apply authored eyebrow and heading size selections across breakpoints.
+const applyTypographySizing = (heroNew, blockConfig) => {
+  const eyebrowDesktop = getFontSizeValue(
+    getFieldValue(blockConfig, 'eyebrowDesktopFontSizeToken'),
+  );
+  const eyebrowTabletSelected = getFieldValue(blockConfig, 'eyebrowTabletFontSizeToken');
+  const eyebrowMobileSelected = getFieldValue(blockConfig, 'eyebrowMobileFontSizeToken');
+  const eyebrowTablet = eyebrowTabletSelected === 'inherit'
+    ? eyebrowDesktop
+    : getFontSizeValue(eyebrowTabletSelected);
+  const eyebrowMobile = eyebrowMobileSelected === 'inherit'
+    ? (eyebrowTablet || eyebrowDesktop)
+    : getFontSizeValue(eyebrowMobileSelected);
+
+  const headingDesktop = getFontSizeValue(
+    getFieldValue(blockConfig, 'headingDesktopFontSizeToken'),
+  );
+  const headingTabletSelected = getFieldValue(blockConfig, 'headingTabletFontSizeToken');
+  const headingMobileSelected = getFieldValue(blockConfig, 'headingMobileFontSizeToken');
+  const headingTablet = headingTabletSelected === 'inherit'
+    ? headingDesktop
+    : getFontSizeValue(headingTabletSelected);
+  const headingMobile = headingMobileSelected === 'inherit'
+    ? (headingTablet || headingDesktop)
+    : getFontSizeValue(headingMobileSelected);
+
+  if (eyebrowDesktop) {
+    heroNew.style.setProperty('--hero-new-eyebrow-size-desktop', eyebrowDesktop);
+  }
+
+  if (eyebrowTablet) {
+    heroNew.style.setProperty('--hero-new-eyebrow-size-tablet', eyebrowTablet);
+  }
+
+  if (eyebrowMobile) {
+    heroNew.style.setProperty('--hero-new-eyebrow-size-mobile', eyebrowMobile);
+  }
+
+  if (headingDesktop) {
+    heroNew.style.setProperty('--hero-new-heading-size-desktop', headingDesktop);
+  }
+
+  if (headingTablet) {
+    heroNew.style.setProperty('--hero-new-heading-size-tablet', headingTablet);
+  }
+
+  if (headingMobile) {
+    heroNew.style.setProperty('--hero-new-heading-size-mobile', headingMobile);
+  }
+};
+
+// Purpose: Resolve CTA style token from display type selection.
+const resolveCtaStyle = (displayTypeValue) => {
+  const normalized = String(displayTypeValue || '').trim().toLowerCase();
+  if (normalized.includes('secondary')) {
+    return 'secondary';
+  }
+
+  return 'primary';
+};
+
 // Purpose: Apply styling classes and variables from styling fields.
 const applyStyling = (heroNew, blockConfig) => {
   blockConfig.forEach((field) => {
@@ -425,44 +494,54 @@ const applyBackgroundImage = (heroNew, blockConfig) => {
   }
 };
 
-// Purpose: Build a CTA block-item cell from authored field value.
-const buildCtaCell = (fieldValue) => {
-  const cell = document.createElement('div');
-  if (fieldValue instanceof Element) {
-    cell.append(fieldValue.cloneNode(true));
-    return cell;
+// Purpose: Build CTA anchor element from parsed CTA field objects.
+const buildCtaLink = (ctaConfig) => {
+  const ctaLabel = String(getListFieldValue(ctaConfig, 'ctaLabel') || '').trim();
+  if (!ctaLabel) {
+    return null;
   }
 
-  const paragraph = document.createElement('p');
-  paragraph.textContent = String(fieldValue ?? '');
-  cell.append(paragraph);
+  const displayType = getListFieldValue(ctaConfig, 'displayType');
+  const ctaStyle = resolveCtaStyle(displayType);
+  const pageOrMediaLink = resolveReferenceUrl(getListFieldValue(ctaConfig, 'pageOrMediaLink'));
+  const externalLink = resolveReferenceUrl(getListFieldValue(ctaConfig, 'externalLink'));
+  const assetsLinks = resolveReferenceUrl(getListFieldValue(ctaConfig, 'assetsLinks'));
+  const ctaLink = pageOrMediaLink || externalLink || assetsLinks || '#';
+  const noFollow = Boolean(getListFieldValue(ctaConfig, 'noFollow'));
+  const openNewWindow = Boolean(getListFieldValue(ctaConfig, 'openNewWindow'));
+  const cta = document.createElement('a');
+  cta.className = 'hero-new-cta-link';
+  cta.classList.add(`hero-new-cta-link-${ctaStyle}`);
+  cta.href = ctaLink;
+  cta.textContent = ctaLabel;
+  if (noFollow) {
+    cta.rel = 'nofollow';
+  }
 
-  return cell;
+  if (openNewWindow) {
+    cta.target = '_blank';
+    cta.rel = cta.rel ? `${cta.rel} noopener noreferrer` : 'noopener noreferrer';
+  }
+
+  return cta;
 };
 
-// Purpose: Build a CTA block-item row from parsed CTA field objects.
-const buildCtaRow = (ctaConfig) => {
-  const row = document.createElement('div');
-  CTA_FIELD_ORDER.forEach((field) => {
-    row.append(buildCtaCell(getListFieldValue(ctaConfig, field.fieldName)));
-  });
-
-  return row;
-};
-
-// Purpose: Build a nested CTA block element so CTA decorate can run.
-const buildNestedCtaBlock = (ctaConfigs) => {
+// Purpose: Build repeatable CTA group and place it below legal text.
+const buildCtaGroup = (ctaConfigs) => {
   if (!ctaConfigs.length) {
     return null;
   }
 
-  const ctaBlock = document.createElement('div');
-  ctaBlock.className = 'cta';
+  const ctaGroup = document.createElement('div');
+  ctaGroup.className = 'hero-new-cta-group';
   ctaConfigs.forEach((ctaConfig) => {
-    ctaBlock.append(buildCtaRow(ctaConfig));
+    const cta = buildCtaLink(ctaConfig);
+    if (cta) {
+      ctaGroup.append(cta);
+    }
   });
 
-  return ctaBlock.childElementCount ? ctaBlock : null;
+  return ctaGroup.childElementCount ? ctaGroup : null;
 };
 
 // Purpose: Build hero-new content markup from blockConfig field objects.
@@ -471,6 +550,7 @@ const buildHeroNewContent = (blockConfig, ctaConfigs) => {
   heroNew.className = 'hero-new';
 
   applyStyling(heroNew, blockConfig);
+  applyTypographySizing(heroNew, blockConfig);
   applyBackgroundImage(heroNew, blockConfig);
 
   const content = document.createElement('div');
@@ -504,11 +584,8 @@ const buildHeroNewContent = (blockConfig, ctaConfigs) => {
     content.append(legal);
   }
 
-  const nestedCtaBlock = buildNestedCtaBlock(ctaConfigs);
-  if (nestedCtaBlock) {
-    const ctaGroup = document.createElement('div');
-    ctaGroup.className = 'hero-new-cta-group';
-    ctaGroup.append(nestedCtaBlock);
+  const ctaGroup = buildCtaGroup(ctaConfigs);
+  if (ctaGroup) {
     content.append(ctaGroup);
   }
 
@@ -517,19 +594,12 @@ const buildHeroNewContent = (blockConfig, ctaConfigs) => {
 };
 
 // Purpose: Apply a single DOM update pass from parsed blockConfig.
-const updateHeroNewDom = async (block, blockConfig, ctaConfigs) => {
+const updateHeroNewDom = (block, blockConfig, ctaConfigs) => {
   block.innerHTML = '';
-  const heroNewContent = buildHeroNewContent(blockConfig, ctaConfigs);
-  block.append(heroNewContent);
-
-  const ctaBlock = heroNewContent.querySelector('.cta');
-  if (ctaBlock) {
-    decorateBlock(ctaBlock);
-    await loadBlock(ctaBlock);
-  }
+  block.append(buildHeroNewContent(blockConfig, ctaConfigs));
 };
 
-export default async function decorate(block) {
+export default function decorate(block) {
   const rows = [...block.children];
   const modelRows = rows.slice(0, MODEL_FIELD_ORDER.length);
   const ctaRows = rows.slice(MODEL_FIELD_ORDER.length);
@@ -537,5 +607,5 @@ export default async function decorate(block) {
   const ctaConfigs = buildCtaConfigs(ctaRows);
   console.log('hero-new block config', { fields: blockConfig, ctas: ctaConfigs });
 
-  await updateHeroNewDom(block, blockConfig, ctaConfigs);
+  updateHeroNewDom(block, blockConfig, ctaConfigs);
 }
