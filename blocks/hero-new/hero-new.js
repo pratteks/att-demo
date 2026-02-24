@@ -582,6 +582,7 @@ const buildCtaGroup = (ctaConfigs) => {
   ctaGroup.className = 'hero-new-cta-group';
   ctaConfigs.forEach((ctaConfig) => {
     const cta = buildCtaLink(ctaConfig);
+    console.log('cta created', cta);
     if (cta) {
       ctaGroup.append(cta);
     }
