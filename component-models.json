@@ -920,17 +920,41 @@
           "label": "Multi Quotation",
           "multi": true,
           "fields" : [
-            {
-              "component": "text",
-              "name": "text1",
-              "label": "Text 1"
-            },
-            {
-              "component": "text",
-              "name": "text2",
-              "label": "Text 2"
-            }
-          ]
+{
+        "component": "aem-content",
+        "name": "link1",
+        "label": "Link"
+      },
+      {
+        "component": "text",
+        "name": "link1Text",
+        "label": "Text"
+      },
+      {
+        "component": "text",
+        "name": "link1Title",
+        "label": "Title"
+      },
+      {
+        "component": "select",
+        "name": "link1Type",
+        "label": "Type",
+        "options": [
+          {
+            "name": "default",
+            "value": ""
+          },
+          {
+            "name": "primary",
+            "value": "primary"
+          },
+          {
+            "name": "secondary",
+            "value": "secondary"
+          }
+        ]
+      }
+]
         }
     ]
   },
