@@ -953,6 +953,22 @@
             "value": "secondary"
           }
         ]
+      },
+	  {
+        "component": "select",
+        "name": "link1Target",
+        "label": "Target",
+        "options": [
+          {
+            "name": "same",
+            "value": "same"
+          },
+          {
+            "name": "newtab",
+            "value": "new"
+          }
+          
+        ]
       }
 ]
         }
